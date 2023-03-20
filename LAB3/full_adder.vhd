@@ -5,7 +5,7 @@ USE ieee.numeric_std.ALL;
 ENTITY full_adder IS
 	PORT(
 		A, B, Ci : IN STD_LOGIC;
-		Co, S : INOUT STD_LOGIC
+		Co, S : OUT STD_LOGIC
 	     );
 END full_adder;
 
