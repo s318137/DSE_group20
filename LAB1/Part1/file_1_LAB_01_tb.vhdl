@@ -1,0 +1,36 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+
+ENTITY file_1_LAB_01_tb IS
+END file_1_LAB_01_tb;
+
+ARCHITECTURE LED_test OF file_1_LAB_01_tb IS
+	COMPONENT part1
+	PORT(
+	 sw : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+	LEDR : OUT STD_LOGIC_VECTOR(9 DOWNTO 0));
+	END COMPONENT;
+
+	--Init signals
+	--Input
+	SIGNAL sw : STD_LOGIC_VECTOR(9 DOWNTO 0) := "0000000000";
+	--Output
+	SIGNAL LEDR : STD_LOGIC_VECTOR(9 DOWNTO 0);
+
+BEGIN
+uut: part1 PORT MAP(
+	sw => sw,
+	LEDR => LEDR	
+	);
+
+PROCESS
+BEGIN
+ sw <= "0000000001";
+ WAIT FOR 200 ns;
+ sw <= "0000000010";
+ WAIT FOR 200 ns;
+ sw <= "0000000100";
+ WAIT FOR 200 ns;
+ WAIT;
+END PROCESS;
+END LED_test;
