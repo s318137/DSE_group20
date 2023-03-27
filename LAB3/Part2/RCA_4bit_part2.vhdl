@@ -27,6 +27,8 @@ SIGNAL A_comp : SIGNED(3 DOWNTO 0) := A_reg;
 SIGNAL B_comp : SIGNED(3 DOWNTO 0) := B_reg;
 
 BEGIN
+PROCESS
+BEGIN --PROCESS
 --Complementation if negatives
 A_comp <= ((-A_comp)+1) WHEN ((B_reg(3) = '1') AND (A_reg(3) = '1')); -- sum of complementaries if both negatives
 B_comp <= ((-B_comp)+1) WHEN ((B_reg(3) = '1') AND (A_reg(3) = '1')); -- sum of complementaries if both negatives
@@ -45,4 +47,5 @@ OVERFLOW <= C_buff(3);
 
 S_reg <= ((-signed(S_buff))+1) WHEN (B_reg(3) = '1') AND (A_reg(3) = '1') ELSE signed(S_buff) ; -- complement of the sum if both negatives
 
+END PROCESS;
 END rca2;
