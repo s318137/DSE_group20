@@ -13,6 +13,8 @@ END RCA_4bit;
 
 ARCHITECTURE rca OF RCA_4bit IS
 
+CONSTANT ONE : SIGNED(A'RANGE) := (0 => '1', others => '0');
+
 COMPONENT full_adder IS
 	PORT(
 		A, B, Ci : IN STD_LOGIC;
@@ -27,8 +29,8 @@ SIGNAL B_comp : SIGNED(3 DOWNTO 0) := B_reg;
 
 BEGIN
 --Complementation if negatives
-A_comp <= ((-A_comp)+1) WHEN ((B_reg(3) = '1') AND (A_reg(3) = '1')); -- sum of complementaries if both negatives
-B_comp <= ((-B_comp)+1) WHEN ((B_reg(3) = '1') AND (A_reg(3) = '1')); -- sum of complementaries if both negatives
+A_comp <= ((-A_comp)+ONE) WHEN ((B_reg(3) = '1') AND (A_reg(3) = '1')); -- sum of complementaries if both negatives
+B_comp <= ((-B_comp)+ONE) WHEN ((B_reg(3) = '1') AND (A_reg(3) = '1')); -- sum of complementaries if both negatives
 
 fa_0 : full_adder PORT MAP (A => A_comp(0), B => B_comp(0), Ci => Ci_in, Co => C_buff(0), S => S_buff(0));
 
@@ -40,6 +42,6 @@ fa_3 : full_adder PORT MAP (A => A_comp(3), B => B_comp(3), Ci => C_buff(2), Co 
 
 OVERFLOW <= C_buff(3);
 
-S_reg <= ((-signed(S_buff))+1) WHEN (B_reg(3) = '1') AND (A_reg(3) = '1') ELSE signed(S_buff) ; -- complement of the sum if both negatives
+S_reg <= ((-signed(S_buff))+ONE) WHEN (B_reg(3) = '1') AND (A_reg(3) = '1') ELSE signed(S_buff) ; -- complement of the sum if both negatives
 
 END rca;
