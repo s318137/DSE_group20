@@ -15,7 +15,7 @@ if (Clk'event and Clk = '1') then
 		       Q <= not(Q);
 		end if;
 	else
-		Q <= '0'
+		Q <= '0';
 	end if;
 end if;
 end process;
