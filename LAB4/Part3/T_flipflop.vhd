@@ -7,10 +7,10 @@ END T_flipflop;
 
 ARCHITECTURE behavior OF T_flipflop IS
 BEGIN
-process (Clk,clr)
+process (clk,clr)
 begin
 if (clr = '1') then
-	if (Clk'event and Clk = '1') then
+	if (Clk'event and clk = '1') then
 		if (T = '1') then
 			Q <= not(Q);
 		end if;
