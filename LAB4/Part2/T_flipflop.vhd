@@ -9,14 +9,17 @@ ARCHITECTURE behavior OF T_flipflop IS
 BEGIN
 process (Clk,clr)
 begin
-if (clr = '1') then
-	if (Clk'event and Clk = '1') then
-		if (T = '1') then
-			Q <= not(Q);
+	if (clr = '1') then
+		if (Clk'event and Clk = '1') then
+			if (T = '1') then
+				Q <= not(Q);
+			end if;
+		end if;
+	else
+		if (Clk'event and Clk = '1') then
+			Q <= '0';
 		end if;
 	end if;
-else
-	Q <= '0';
-end if;
+
 end process;
 END behavior;
