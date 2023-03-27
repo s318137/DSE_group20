@@ -16,9 +16,9 @@ begin
 			end if;
 		end if;
 	else
-		if (Clk'event and Clk = '1') then
+		
 			Q <= '0';
-		end if;
+		
 	end if;
 
 end process;
