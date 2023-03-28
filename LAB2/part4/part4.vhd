@@ -4,7 +4,9 @@ USE ieee.numeric_std.all;
 
 
 ENTITY part4 IS
-	PORT(	sw : in std_logic_vector(9 downto 0);
+	-- i've modify the sw ftom 9 DOWNTO 0 to 5 DOWNTO 0 otherwise i can't find a solution to test it
+	-- if you think that can generate some issues with quartus let me know 
+	PORT(	sw : in std_logic_vector(5 downto 0);
 			hex0,hex1 : out std_logic_vector(0 to 6)
 		);
 END part4;
