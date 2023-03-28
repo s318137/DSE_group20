@@ -13,9 +13,9 @@ ARCHITECTURE behavior OF part4_tb IS
         );
     END COMPONENT;
 
-    signal SW : std_logic_vector(9 downto 0) := (others => '0');
-    signal HEX0 : std_logic_vector(0 to 6);
-    signal HEX1 : std_logic_vector(0 to 6);
+    SIGNAL SW : std_logic_vector(9 downto 0);
+    SIGNAL HEX0 : std_logic_vector(0 to 6);
+    SIGNAL HEX1 : std_logic_vector(0 to 6);
 
     BEGIN
 
@@ -31,51 +31,51 @@ ARCHITECTURE behavior OF part4_tb IS
 
                 -- Test 1
                 SW <= "0000000001";      
-                wait for 10 ns;
-                assert(HEX0 = "0000110" and HEX1 = "0000110")
-                report "Test 1 failed";
+                WAIT FOR 10 ns;
+                ASSERT(HEX0 = "0000110" AND HEX1 = "0000110")
+                REPORT "Test 1 failed";
                 
                 -- Test 2
                 SW <= "0000000010";      
-                wait for 10 ns;
-                assert(HEX0 = "0000006" and HEX1 = "0000000")
-                report "Test 2 failed";
+                WAIT FOR 10 ns;
+                ASSERT(HEX0 = "0000000" AND HEX1 = "0000000")
+                REPORT "Test 2 failed";
                 
                 -- Test 3
                 SW <= "0000000100";      
-                wait for 10 ns;
-                assert(HEX0 = "0000011" and HEX1 = "0000000")
-                report "Test 3 failed";
+                WAIT FOR 10 ns;
+                ASSERT(HEX0 = "0000011" AND HEX1 = "0000000")
+                REPORT "Test 3 failed";
                 
                 -- Test 4
                 SW <= "0000001000";      
-                wait for 10 ns;
-                assert(HEX0 = "0000000" and HEX1 = "0000100")
-                report "Test 4 failed";
+                WAIT FOR 10 ns;
+                ASSERT(HEX0 = "0000000" AND HEX1 = "0000100")
+                REPORT "Test 4 failed";
                 
                 -- Test 5
                 SW <= "0000010000";      
-                wait for 10 ns;
-                assert(HEX0 = "0000000" and HEX1 = "0000001")
-                report "Test 5 failed";
+                WAIT FOR 10 ns;
+                ASSERT(HEX0 = "0000000" AND HEX1 = "0000001")
+                REPORT "Test 5 failed";
                 
                 -- Test 6
                 SW <= "0000100000";      
-                wait for 10 ns;
-                assert(HEX0 = "0000000" and HEX1 = "0000011")
-                report "Test 6 failed";
+                WAIT FOR 10 ns;
+                ASSERT(HEX0 = "0000000" AND HEX1 = "0000011")
+                REPORT "Test 6 failed";
                 
                 -- Test 7
                 SW <= "0001000000";      
-                wait for 10 ns;
-                assert(HEX0 = "0000000" and HEX1 = "0000000")
-                report "Test 7 failed";
+                WAIT FOR 10 ns;
+                ASSERT(HEX0 = "0000000" AND HEX1 = "0000000")
+                REPORT "Test 7 failed";
                 
                 -- Test 8
                 SW <= "0010000000";      
-                wait for 10 ns;
-                assert(HEX0 = "0000000" and HEX1 = "0000000")
-                report "Test 8 failed";
+                WAIT FOR 10 ns;
+                ASSERT(HEX0 = "0000000" AND HEX1 = "0000000")
+                REPORT "Test 8 failed";
 
                 WAIT;
 
