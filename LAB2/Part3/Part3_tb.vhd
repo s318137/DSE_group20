@@ -29,25 +29,25 @@ ARCHITECTURE behavior OF Part3_tb IS
             SW <= "0000";
             WAIT FOR 10 ns;
             ASSERT HEX1 = "0000001" AND HEX0 = "0000001" 
-            REPORT "Test case 1 failed"; 
+            REPORT "Test 1 failed"; 
 
             -- Test 2: SW = "1000" equivalent number: 08
             SW <= "1000";
             WAIT FOR 10 ns;
             ASSERT HEX1 = "0000001" AND HEX0 = "0000000" 
-            REPORT "Test case 2 failed"; 
+            REPORT "Test 2 failed"; 
 
             -- Test 3: SW = "1101" equivalent number: 13
             SW <= "1101";
             WAIT FOR 10 ns;
             ASSERT HEX1 = "1001111" AND HEX0 = "0000110" 
-            REPORT "Test case 3 failed";
+            REPORT "Test 3 failed";
 
             -- Test 4: SW = "1111" equivalent number: 15
             SW <= "1111";
             WAIT FOR 10 ns;
             ASSERT HEX1 = "1001111" AND HEX0 = "0100100" 
-            REPORT "Test case 4 failed";
+            REPORT "Test 4 failed";
 
             WAIT;
     END PROCESS;
