@@ -2,12 +2,12 @@ LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-ENTITY RCA_4bit_tb IS
-END RCA_4bit_tb;
+ENTITY RCA_4bit_part2_tb IS
+END RCA_4bit_part2_tb;
 
-ARCHITECTURE test OF RCA_4bit_tb IS
+ARCHITECTURE test OF RCA_4bit_part2_tb IS
 
-	COMPONENT RCA_4bit IS
+	COMPONENT RCA_4bit_part2 IS
 		PORT(
 			A_reg, B_reg : IN SIGNED(3 DOWNTO 0);
 			Ci_in : IN STD_LOGIC;
@@ -24,7 +24,7 @@ ARCHITECTURE test OF RCA_4bit_tb IS
 	SIGNAL V_FLAG : STD_LOGIC;
 
 BEGIN
-	uut: RCA_4bit PORT MAP(
+	uut: RCA_4bit_part2 PORT MAP(
 	A_reg => A,
 	B_reg => B,
 	S_reg => S,
