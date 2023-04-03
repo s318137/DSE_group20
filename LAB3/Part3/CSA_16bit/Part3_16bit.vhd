@@ -7,7 +7,7 @@ ENTITY Part3_16bit IS
 		A_16b, B_16b : IN SIGNED(15 DOWNTO 0);
 		Ci_in : IN STD_LOGIC;
 		Co: OUT STD_LOGIC;
-		S_16b : OUT SIGNED(15 DOWNTO 0);
+		S_16b : OUT SIGNED(15 DOWNTO 0)
 		);
 		
 END Part3_16bit;
@@ -31,7 +31,7 @@ ARCHITECTURE struct OF Part1 IS
 BEGIN
 
 --A series of 4bit RCAs with a ripple carry between them
--
+
 
 rca_1 : RCA_4bit PORT MAP(A_reg => A_16b(3 DOWNTO 0),
 						  B_reg =>B_16b(3 DOWNTO 0), 

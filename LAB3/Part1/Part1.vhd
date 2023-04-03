@@ -3,8 +3,7 @@ USE IEEE.STD_LOGIC_1164.ALL;
 USE ieee.numeric_std.ALL;
 
 ENTITY Part1 IS
-	PORT(
-		CLK, 
+	PORT( 
 		SW : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
 		KEY0, KEY1 : IN STD_LOGIC; 
 		HEX0, HEX1, HEX2, HEX3, HEX4, HEX5 : OUT STD_LOGIC_VECTOR(0 TO 6);
@@ -58,9 +57,9 @@ ARCHITECTURE struct OF Part1 IS
 
 BEGIN
 
-regnA : regn PORT MAP(R=>signed(SW(3 DOWNTO 0)), Clock => KEY0, Resetn => KEY1, Q=>A_display);
+regnA : regn PORT MAP(R=>signed(SW(3 DOWNTO 0)), Clock => KEY1, Resetn => KEY0, Q=>A_display);
 
-regnB : regn PORT MAP(R=>signed(SW(7 DOWNTO 4)), Clock => KEY0, Resetn => KEY1, Q=>B_display);
+regnB : regn PORT MAP(R=>signed(SW(7 DOWNTO 4)), Clock => KEY1, Resetn => KEY0, Q=>B_display);
 
 RCA_01 : RCA_4bit PORT MAP(
 							A_reg => signed(A_display),
@@ -70,9 +69,9 @@ RCA_01 : RCA_4bit PORT MAP(
 							S_reg => S_mem)
 							;
 
-ff_carry : flipflop PORT MAP(D => adder_carry, Clock => KEY0, Resetn => KEY1, Q=> LEDR(9));
+ff_carry : flipflop PORT MAP(D => adder_carry, Clock => KEY1, Resetn => KEY0, Q=> LEDR(9));
 
-regnS : regn PORT MAP(R=>S_mem, Clock => KEY0, Resetn => KEY1, Q=>S_display);
+regnS : regn PORT MAP(R=>S_mem, Clock => KEY1, Resetn => KEY0, Q=>S_display);
 
 ov1 : overflow PORT MAP(carry => adder_carry, OV => FLAG);
 

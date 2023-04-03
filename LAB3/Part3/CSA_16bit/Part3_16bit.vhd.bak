@@ -1,0 +1,63 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE ieee.numeric_std.ALL;
+
+ENTITY Part3_16bit IS
+	PORT(
+		A_16b, B_16b : IN SIGNED(15 DOWNTO 0);
+		Ci_in : IN STD_LOGIC;
+		Co: OUT STD_LOGIC;
+		S_16b : OUT SIGNED(15 DOWNTO 0);
+		);
+		
+END Part3_16bit;
+
+ARCHITECTURE struct OF Part1 IS
+
+	COMPONENT RCA_4bit IS
+		PORT(
+			A_reg, B_reg : IN SIGNED(3 DOWNTO 0);
+			Ci_in : IN STD_LOGIC;
+			OVERFLOW : OUT STD_LOGIC;
+			S_reg : OUT SIGNED(3 DOWNTO 0)
+			);
+	END COMPONENT;
+
+	SIGNAL S_buff : SIGNED(15 DOWNTO 0) := (others => '0');
+	SIGNAL C_buff : SIGNED(15 DOWNTO 0) := (others => '0');
+	SIGNAL E_4bit : STD_LOGIC_VECTOR(3 DOWNTO 0) := "0000";
+
+
+BEGIN
+
+--A series of 4bit RCAs with a ripple carry between them
+-
+
+rca_1 : RCA_4bit PORT MAP(A_reg => A_16b(3 DOWNTO 0),
+						  B_reg =>B_16b(3 DOWNTO 0), 
+						  Ci_in => Ci_in, 
+						  OVERFLOW => C_buff(3), 
+						  S_reg => S_buff(3 DOWNTO 0));
+
+rca_2 : RCA_4bit PORT MAP(A_reg => A_16b(7 DOWNTO 4), 
+						  B_reg =>B_16b(7 DOWNTO 4), 
+						  Ci_in => C_buff(3), 
+						  OVERFLOW => C_buff(7), 
+						  S_reg => S_buff(7 DOWNTO 4));
+
+rca_3 : RCA_4bit PORT MAP(A_reg => A_16b(11 DOWNTO 8), 
+						  B_reg =>B_16b(11 DOWNTO 8), 
+						  Ci_in => C_buff(7), 
+						  OVERFLOW => C_buff(11), 
+						  S_reg => S_buff(11 DOWNTO 8));
+
+rca_4 : RCA_4bit PORT MAP(A_reg => A_16b(15 DOWNTO 12), 
+						  B_reg =>B_16b(15 DOWNTO 12), 
+						  Ci_in => C_buff(11), 
+						  OVERFLOW => C_buff(15), 
+						  S_reg => S_buff(15 DOWNTO 12));
+
+Co <= C_buff(15); --Last bit of C_buff is the carry at the end
+S_16b <= S_buff;
+
+END struct;
