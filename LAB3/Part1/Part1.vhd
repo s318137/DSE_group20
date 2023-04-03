@@ -49,8 +49,8 @@ ARCHITECTURE struct OF Part1 IS
 		);
 	END COMPONENT;
 
-	SIGNAL A_display : SIGNED(3 DOWNTO 0) := signed(SW(3 DOWNTO 0));
-	SIGNAL B_display : SIGNED(3 DOWNTO 0) := signed(SW(7 DOWNTO 4));
+	SIGNAL A_display : SIGNED(3 DOWNTO 0);
+	SIGNAL B_display : SIGNED(3 DOWNTO 0);
 	SIGNAL S_mem : SIGNED(3 DOWNTO 0);
 	SIGNAL S_display : SIGNED(3 DOWNTO 0);
 	SIGNAL adder_carry : STD_LOGIC; 
