@@ -25,6 +25,7 @@ ARCHITECTURE struct OF Part1 IS
 	END COMPONENT;
 
 	COMPONENT regn IS
+		GENERIC (N :integer:=4);
 		PORT (R : IN SIGNED(N-1 DOWNTO 0);
 		Clock, Resetn : IN STD_LOGIC;
 		Q : OUT SIGNED(N-1 DOWNTO 0));
@@ -40,6 +41,7 @@ ARCHITECTURE struct OF Part1 IS
 			carry : IN STD_LOGIC;
 			OV : OUT UNSIGNED(7 DOWNTO 0)
 			);
+		END COMPONENT;
 
 	COMPONENT Part3 IS
 		PORT (sw : IN std_logic_vector(3 DOWNTO 0);
@@ -47,38 +49,37 @@ ARCHITECTURE struct OF Part1 IS
 		);
 	END COMPONENT;
 
-	SIGNAL A_display : STD_LOGIC_VECTOR(3 DOWNTO 0) := SW(3 DOWNTO 0);
-	SIGNAL B_display : STD_LOGIC_VECTOR(3 DOWNTO 0) := SW(7 DOWNTO 4);
-	SIGNAL S_display : SIGNED(3 DOWNTO 0) := "0000";
+	SIGNAL A_display : SIGNED(3 DOWNTO 0) := signed(SW(3 DOWNTO 0));
+	SIGNAL B_display : SIGNED(3 DOWNTO 0) := signed(SW(7 DOWNTO 4));
+	SIGNAL S_mem : SIGNED(3 DOWNTO 0);
+	SIGNAL S_display : SIGNED(3 DOWNTO 0);
 	SIGNAL adder_carry : STD_LOGIC; 
 	SIGNAL FLAG : UNSIGNED(7 DOWNTO 0); 
 
 BEGIN
 
-regnA : regn PORT MAP(R=>SW(3 DOWN 0), Clock => KEY0, Resetn => KEY1, Q=>A_display);
+regnA : regn PORT MAP(R=>signed(SW(3 DOWNTO 0)), Clock => KEY0, Resetn => KEY1, Q=>A_display);
 
-regnB : regn PORT MAP(R=>SW(7 DOWN 4), Clock => KEY0, Resetn => KEY1, Q=>B_display);
+regnB : regn PORT MAP(R=>signed(SW(7 DOWNTO 4)), Clock => KEY0, Resetn => KEY1, Q=>B_display);
 
 RCA_01 : RCA_4bit PORT MAP(
 							A_reg => signed(A_display),
 							B_reg => signed(B_display),
 							Ci_in => SW(9),
 							OVERFLOW => adder_carry,
-							S_reg => S_display)
+							S_reg => S_mem)
 							;
 
-ff_carry : flipflop PORT MAP(D => adder_carry, Clock => KEY0, Resetn => KEY1, Q=> adder_carry);
+ff_carry : flipflop PORT MAP(D => adder_carry, Clock => KEY0, Resetn => KEY1, Q=> LEDR(9));
 
-regnS : regn PORT MAP(R=>S_display, Clock => KEY0, Resetn => KEY1, Q=>S_display);
+regnS : regn PORT MAP(R=>S_mem, Clock => KEY0, Resetn => KEY1, Q=>S_display);
 
 ov1 : overflow PORT MAP(carry => adder_carry, OV => FLAG);
 
 
 
-LEDR(9) <= adder_carry;
-
-A_disp : Part3 PORT MAP(sw => A_display, hex1 => HEX1, hex0 => HEX0);
-B_disp : Part3 PORT MAP(sw => B_display, hex1 => HEX3, hex0 => HEX2);
+A_disp : Part3 PORT MAP(sw => STD_LOGIC_VECTOR(A_display), hex1 => HEX1, hex0 => HEX0);
+B_disp : Part3 PORT MAP(sw => STD_LOGIC_VECTOR(B_display), hex1 => HEX3, hex0 => HEX2);
 S_disp : Part3 PORT MAP(sw => STD_LOGIC_VECTOR(S_display), hex1 => HEX5, hex0 => HEX4);
 
 
