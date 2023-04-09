@@ -36,10 +36,6 @@ B_comp <= (not(B_reg)+ONE) WHEN (((B_reg(3) = '1') AND (A_reg(3) = '1')) XOR (AD
 
 --Complementation if negatives
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e13512704f2e2564ab3be5a0ea6f2d1e24c94ebf
 fa_0 : full_adder PORT MAP (A => A_comp(0), B => B_comp(0), Ci => Ci_in, Co => C1, S => S_buff(0));
 
 fa_1 : full_adder PORT MAP (A => A_comp(1), B => B_comp(1), Ci => C1, Co => C2, S => S_buff(1));
