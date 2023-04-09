@@ -36,7 +36,6 @@ B_comp <= (not(B_reg)+ONE) WHEN (((B_reg(3) = '1') AND (A_reg(3) = '1')) XOR (AD
 
 --Complementation if negatives
 
-B_comp <= (not(B_reg)+ONE) WHEN (ADD_SUB ='1') ELSE B_comp; --Complement B once again if sub mode activited
 
 fa_0 : full_adder PORT MAP (A => A_comp(0), B => B_comp(0), Ci => Ci_in, Co => C1, S => S_buff(0));
 

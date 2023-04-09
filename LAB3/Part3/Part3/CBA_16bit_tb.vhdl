@@ -2,12 +2,12 @@ LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-ENTITY RCA_16bit_tb IS
-END RCA_16bit_tb;
+ENTITY CBA_16bit_tb IS
+END CBA_16bit_tb;
 
-ARCHITECTURE test OF RCA_16bit_tb IS
+ARCHITECTURE test OF CBA_16bit_tb IS
 
-	COMPONENT RCA_16bit IS
+	COMPONENT CarryBypassAdder_16bit IS
 		PORT(
 		A_reg, B_reg : IN SIGNED(15 DOWNTO 0);
 		Ci_in : IN STD_LOGIC;
@@ -24,7 +24,7 @@ ARCHITECTURE test OF RCA_16bit_tb IS
 	SIGNAL V_FLAG : STD_LOGIC;
 
 BEGIN
-	uut: RCA_16bit PORT MAP(
+	uut: CarryBypassAdder_16bit PORT MAP(
 	A_reg => A,
 	B_reg => B,
 	S_reg => S,

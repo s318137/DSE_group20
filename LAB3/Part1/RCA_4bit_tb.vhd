@@ -17,10 +17,12 @@ ARCHITECTURE test OF RCA_4bit_tb IS
 	END COMPONENT;
 	
 	--Init signals
+	--Input signals
 	SIGNAL A : SIGNED(3 DOWNTO 0) := "0000";
 	SIGNAL B : SIGNED(3 DOWNTO 0) := "0000";
-	SIGNAL S : SIGNED(3 DOWNTO 0);
 	SIGNAL C : STD_LOGIC := '0';
+	
+	SIGNAL S : SIGNED(3 DOWNTO 0);
 	SIGNAL V_FLAG : STD_LOGIC;
 
 BEGIN
@@ -75,6 +77,12 @@ BEGIN
 	B <= "1010";
 	C <= '1';
 	-- S = 0100
+	wait for 100 ns;
+	
+	--Voluntary overflow
+	A <= "1000";
+	B <= "1000";
+	C <= '1';
 	wait for 100 ns;
 	
 	wait;
