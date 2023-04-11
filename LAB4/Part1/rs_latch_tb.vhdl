@@ -24,50 +24,39 @@ BEGIN
         Q => q
     );
 
-    clk_process :process
-    begin
-        wait for 10 ns;
-        clk <= not clk;
-    end process;
+    clk_PROCESS :PROCESS
+    BEGIN
+        WAIT FOR 10 ns;
+        clk <= NOT clk;
+    END PROCESS;
 
-    stim_proc: process
-    begin
+    stim_proc: PROCESS
+    BEGIN
         -- Hold reset for some time
         r <= '1';
         s <= '0';
-        wait for 50 ns;
+        REPORT "r => 1, s => 0";
+        WAIT FOR 50 ns;
 
         -- Release reset and set S high
         r <= '0';
         s <= '1';
-        wait for 50 ns;
-
-        -- Set R high and S low
-        r <= '1';
-        s <= '0';
-        wait for 50 ns;
+        REPORT "r => 0, s => 1";
+        WAIT FOR 50 ns;
 
         -- Set both R and S to low
         r <= '0';
         s <= '0';
-        wait for 50 ns;
+        REPORT "r => 0, s => 0";
+        WAIT FOR 50 ns;
 
         -- Set both R and S to high
         r <= '1';
         s <= '1';
-        wait for 50 ns;
+        REPORT "r => 1, s => 1";
+        WAIT FOR 50 ns;
 
-        -- Set S high and R low
-        r <= '0';
-        s <= '1';
-        wait for 50 ns;
-
-        -- Set S low and R high
-        r <= '1';
-        s <= '0';
-        wait for 50 ns;
-
-        wait;
-    end process;
+        WAIT;
+    END PROCESS;
 
 END behavior;
