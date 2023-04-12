@@ -13,7 +13,7 @@ ARCHITECTURE structure OF counter_4b_struct IS
 
        COMPONENT T_flipflop IS
               PORT (
-                     Clk, T ,clr: IN STD_LOGIC;
+                     Clk, T, clr: IN STD_LOGIC;
                      Q : BUFFER STD_LOGIC
               );
        END COMPONENT;
@@ -26,10 +26,10 @@ ARCHITECTURE structure OF counter_4b_struct IS
               in2 <= en AND out1;
               in3 <= in2 AND out2;
               in4 <= in3 AND out3;
-              ff1 : T_flipflop PORT MAP (clk,en,NOT rst,out1);
-              ff2 : T_flipflop PORT MAP (clk,in2,NOT rst,out2);
-              ff3 : T_flipflop PORT MAP (clk,in3,NOT rst,out3);
-              ff4 : T_flipflop PORT MAP (clk,in4,NOT rst,output(3));
+              ff1 : T_flipflop PORT MAP (clk, en, NOT rst, out1);
+              ff2 : T_flipflop PORT MAP (clk, in2, NOT rst, out2);
+              ff3 : T_flipflop PORT MAP (clk, in3, NOT rst, out3);
+              ff4 : T_flipflop PORT MAP (clk, in4, NOT rst, output(3));
               output(0) <= out1;
               output(1) <= out2;
               output(2) <= out3;

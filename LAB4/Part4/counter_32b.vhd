@@ -2,22 +2,27 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 USE ieee.numeric_std.all;
 
-entity counter_32b is
-port (rst,clk,en: IN STD_LOGIC; 
-      output : buffer unsigned(31 downto 0)
-		);
-end counter_32b;
+ENTITY counter_32b IS
+	PORT (
+		rst, clk, en: IN STD_LOGIC; 
+		output : BUFFER unsigned(31 DOWNTO 0)
+	);
+END counter_32b;
 
-architecture behavior of counter_32b is
-begin
-process (clk)
-begin
-if (clk'event and clk = '1') then
-	if (en = '1' and rst = '1') then
-		output <= output + 1;
-	elsif (rst = '0') then
-		output <= x"00000000";
-	end if;
-end if;
-end process;
-end behavior;
+ARCHITECTURE behavior OF counter_32b IS
+
+	BEGIN
+		PROCESS (clk)
+			BEGIN
+
+			IF (clk'event AND clk = '1') THEN
+				IF (en = '1' AND rst = '1') THEN
+					output <= output + 1;
+				ELSIF (rst = '0') THEN
+					output <= x"00000000";
+				END IF;
+			END IF;
+
+		END PROCESS;
+
+END behavior;

@@ -31,10 +31,10 @@ ARCHITECTURE structure OF part2_2 IS
 	SIGNAL tap : std_logic;
 
 	BEGIN
-		counter : part2_1 PORT MAP(KEY(0),SW(0),SW(1),counter_out,tap);
-		dec1 : hex_decoder PORT MAP(counter_out(15 DOWNTO 12),HEX3);
-		dec2 : hex_decoder PORT MAP(counter_out(11 DOWNTO 8),HEX2);
-		dec3 : hex_decoder PORT MAP(counter_out(7 DOWNTO 4),HEX1);
-		dec4 : hex_decoder PORT MAP(counter_out(3 DOWNTO 0),HEX0);
+		counter : part2_1 PORT MAP(KEY(0), SW(0), SW(1), counter_out, tap);
+		dec1 : hex_decoder PORT MAP(counter_out(15 DOWNTO 12), HEX3);
+		dec2 : hex_decoder PORT MAP(counter_out(11 DOWNTO 8), HEX2);
+		dec3 : hex_decoder PORT MAP(counter_out(7 DOWNTO 4), HEX1);
+		dec4 : hex_decoder PORT MAP(counter_out(3 DOWNTO 0), HEX0);
 
 END structure;

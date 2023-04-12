@@ -9,6 +9,7 @@ ENTITY T_flipflop IS
 END T_flipflop;
 
 ARCHITECTURE behavior OF T_flipflop IS
+
 	BEGIN
 		PROCESS (Clk)
 			BEGIN
