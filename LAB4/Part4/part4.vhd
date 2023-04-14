@@ -5,7 +5,7 @@ USE ieee.numeric_std.all;
 ENTITY part4 IS
 	PORT (
 		sw : IN std_logic_vector(9 DOWNTO 0);
-		CLOCK_50 : IN std_logic;
+		clock_50 : IN std_logic;
 		hex0 : OUT std_logic_vector(0 TO 6)
 	);
 END part4;

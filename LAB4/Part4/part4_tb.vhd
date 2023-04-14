@@ -35,7 +35,7 @@ ARCHITECTURE behavior OF part4_tb IS
 
                 -- Reset signal assertion
                 sw(0) <= '0';
-                WAIT FOR 10 ns;
+                WAIT FOR 100 ns;
 
                 -- Release reset signal
                 sw(0) <= '1';
@@ -43,7 +43,7 @@ ARCHITECTURE behavior OF part4_tb IS
 
                 -- Start the timer
                 sw <= "0000000001";
-                WAIT FOR 1 us;
+                WAIT FOR 500 ns;
 
                 -- Verify output
                 ASSERT hex0 = x"ABCDEF" REPORT "Output mismatch" SEVERITY error;

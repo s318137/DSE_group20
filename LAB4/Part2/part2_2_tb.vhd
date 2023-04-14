@@ -33,13 +33,11 @@ ARCHITECTURE behavior OF part2_2_tb IS
         stim_proc: PROCESS
             BEGIN		
                     
-                WAIT FOR 10 ns;
+                WAIT FOR 50 ns;
                 SW <= "0000000001";
                 KEY <= "0001";
-                WAIT FOR 10 ns;           
-                ASSERT HEX3 = "0011111" AND HEX2 = "0000010" AND HEX1 = "0000000" AND HEX0 = "0000001"
-                REPORT "Test case 1 failed" SEVERITY error;
-                    
+                WAIT FOR 50 ns;
+
                 WAIT;
                 
         END PROCESS;

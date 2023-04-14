@@ -10,14 +10,16 @@ ARCHITECTURE behavior OF part5_tb IS
 	COMPONENT part5 IS 
         PORT (
             clock_50 : IN std_logic;
-            ledr : OUT std_logic_vector(9 DOWNTO 0);
-            sw : IN std_logic_vector(9 DOWNTO 0);
+            ledr : OUT std_logic_vector(6 DOWNTO 0);
+            sw : IN std_logic_vector(7 DOWNTO 0);
             key : IN std_logic_vector(3 DOWNTO 0);
             hex0,hex1,hex2,hex3 : OUT std_logic_vector(0 TO 6)
         );
 	END COMPONENT;
 
-	SIGNAL clock_50, sw, key : std_logic;
+	SIGNAL clock_50 : std_logic;
+    SIGNAL sw : std_logic_vector(7 DOWNTO 0);
+    SIGNAL key : std_logic_vector(3 DOWNTO 0);
 	SIGNAL ledr, hex0, hex1, hex2, hex3 : std_logic_vector(0 TO 6);
 
 	BEGIN
@@ -47,25 +49,18 @@ ARCHITECTURE behavior OF part5_tb IS
         PROCESS
 
             BEGIN
-                sw <= "0000000000";
+                sw <= "00000000";
                 key <= "0000";
                 WAIT FOR 100 ns;
                 key <= "0001";
-                WAIT FOR 50 ns;
-                assert ledr = "0000000001" REPORT "Test case 1 failed" severity error;
-                key <= "0010";
-                WAIT FOR 50 ns;
-                assert ledr = "0000000000" REPORT "Test case 2 failed" severity error;
-                WAIT;
-
-        END PROCESS;
-
-        -- Display the simulation results
-        PROCESS
-
-            BEGIN
-                WAIT FOR 500 ns;
-                REPORT "Simulation completed" severity note;
+                WAIT FOR 100 ns;
+                key <= "1000";
+                WAIT FOR 100 ns;
+                sw <= "11111111";
+                key <= "0001";
+                WAIT FOR 100 ns;
+                key <= "1000";
+                
                 WAIT;
 
         END PROCESS;

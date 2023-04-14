@@ -55,19 +55,29 @@ architecture structure OF part5 IS
 	SIGNAL counter_out,comparator_ref : unsigned(31 DOWNTO 0);
 
 	BEGIN
+
 		comparator_ref(31 DOWNTO 8) <= (OTHERS => '0');
 		comparator_ref(7 DOWNTO 0) <= unsigned(sw(7 DOWNTO 0));
+
 		sr_in <= NOT(key(3));
+
 		timer1 : timer_outside_tap PORT MAP (clock_50, timer_en, key(0), x"0000C34F", hex0);
 		timer2 : timer_outside_tap PORT MAP (clock_50, timer_en, key(0), x"0007A11F", hex1);
 		timer3 : timer_outside_tap PORT MAP (clock_50, timer_en, key(0), x"004C4B3F", hex2);
 		timer4 : timer_outside_tap PORT MAP (clock_50, timer_en, key(0), x"02FAF07F", hex3);
+
 		pulse1 : pulse_outside_tap PORT MAP (clock_50, pulse_en, key(0),pulse_out,x"0000C34F");
+
 		counter1 : counter_32b PORT MAP (key(0), clock_50, pulse_out, counter_out);
+		
 		comparator1 : comparator_32b PORT MAP (counter_out, comparator_ref, comparator_out);
+		
 		latch : SR_latch PORT MAP (sr_in, '0', key(0), sr_out);
+		
 		timer_en <= NOT(sr_out) AND comparator_out;
+		
 		pulse_en <= NOT(comparator_out);
+		
 		ledr(0) <= timer_en;
 
 END structure;
