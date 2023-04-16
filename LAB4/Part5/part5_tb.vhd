@@ -10,17 +10,18 @@ ARCHITECTURE behavior OF part5_tb IS
 	COMPONENT part5 IS 
         PORT (
             clock_50 : IN std_logic;
-            ledr : OUT std_logic_vector(6 DOWNTO 0);
-            sw : IN std_logic_vector(7 DOWNTO 0);
+            ledr : OUT std_logic_vector(9 DOWNTO 0);
+            sw : IN std_logic_vector(9 DOWNTO 0);
             key : IN std_logic_vector(3 DOWNTO 0);
             hex0,hex1,hex2,hex3 : OUT std_logic_vector(0 TO 6)
         );
 	END COMPONENT;
 
 	SIGNAL clock_50 : std_logic;
-    SIGNAL sw : std_logic_vector(7 DOWNTO 0);
+    SIGNAL sw : std_logic_vector(9 DOWNTO 0);
     SIGNAL key : std_logic_vector(3 DOWNTO 0);
-	SIGNAL ledr, hex0, hex1, hex2, hex3 : std_logic_vector(0 TO 6);
+    SIGNAL ledr : std_logic_vector(9 DOWNTO 0);
+	SIGNAL hex0, hex1, hex2, hex3 : std_logic_vector(0 TO 6);
 
 	BEGIN
 
@@ -49,14 +50,15 @@ ARCHITECTURE behavior OF part5_tb IS
         PROCESS
 
             BEGIN
-                sw <= "00000000";
+                sw <= "0000000000";
                 key <= "0000";
                 WAIT FOR 100 ns;
                 key <= "0001";
                 WAIT FOR 100 ns;
                 key <= "1000";
                 WAIT FOR 100 ns;
-                sw <= "11111111";
+
+                sw <= "1111111111";
                 key <= "0001";
                 WAIT FOR 100 ns;
                 key <= "1000";

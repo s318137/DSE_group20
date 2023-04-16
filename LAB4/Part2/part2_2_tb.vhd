@@ -15,8 +15,8 @@ ARCHITECTURE behavior OF part2_2_tb IS
         );
     END COMPONENT;
 
-   SIGNAL SW : std_logic_vector(9 DOWNTO 0) := (OTHERS => '0');
-   SIGNAL KEY : std_logic_vector(3 DOWNTO 0) := (OTHERS => '0');
+   SIGNAL SW : std_logic_vector(9 DOWNTO 0);
+   SIGNAL KEY : std_logic_vector(3 DOWNTO 0);
    SIGNAL HEX0, HEX1, HEX2, HEX3 : std_logic_vector(0 TO 6);
 
     BEGIN
@@ -32,12 +32,21 @@ ARCHITECTURE behavior OF part2_2_tb IS
 
         stim_proc: PROCESS
             BEGIN		
-                    
+                
+                --testing reset
                 WAIT FOR 50 ns;
                 SW <= "0000000001";
-                KEY <= "0001";
                 WAIT FOR 50 ns;
+                KEY <= "0001";
+                WAIT FOR 50 ns;           
 
+                --testing enable
+                WAIT FOR 50 ns;
+                SW <= "0000000010";
+                WAIT FOR 50 ns;
+                KEY <= "0001";
+                WAIT FOR 50 ns;     
+                    
                 WAIT;
                 
         END PROCESS;

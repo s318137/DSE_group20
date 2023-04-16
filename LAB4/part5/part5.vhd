@@ -51,8 +51,8 @@ architecture structure OF part5 IS
 		);
 	END COMPONENT;
 
-	SIGNAL timer_en,pulse_out,pulse_en,comparator_out,sr_out,sr_in : std_logic;
-	SIGNAL counter_out,comparator_ref : unsigned(31 DOWNTO 0);
+	SIGNAL timer_en, pulse_out, pulse_en, comparator_out, sr_out, sr_in : std_logic;
+	SIGNAL counter_out, comparator_ref : unsigned(31 DOWNTO 0);
 
 	BEGIN
 
@@ -66,7 +66,7 @@ architecture structure OF part5 IS
 		timer3 : timer_outside_tap PORT MAP (clock_50, timer_en, key(0), x"004C4B3F", hex2);
 		timer4 : timer_outside_tap PORT MAP (clock_50, timer_en, key(0), x"02FAF07F", hex3);
 
-		pulse1 : pulse_outside_tap PORT MAP (clock_50, pulse_en, key(0),pulse_out,x"0000C34F");
+		pulse1 : pulse_outside_tap PORT MAP (clock_50, pulse_en, key(0),pulse_out, x"0000C34F");
 
 		counter1 : counter_32b PORT MAP (key(0), clock_50, pulse_out, counter_out);
 		
