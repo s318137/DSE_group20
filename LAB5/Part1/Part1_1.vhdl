@@ -5,7 +5,7 @@ USE ieee.numeric_std.ALL;
 ENTITY Part1_1 IS
 	PORT(
 		SW : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
-		KEY1 : IN STD_LOGIC; 
+		KEY : IN STD_LOGIC_VECTOR(3 DOWNTO 0); 
 		LEDR : OUT STD_LOGIC_VECTOR(9 DOWNTO 0)
 		);
 		
@@ -52,17 +52,17 @@ H_up <= '1' WHEN ((W = '1' AND OneHot = "001000000")) ELSE '0';
 
 I_up <= '1' WHEN (((W = '1' AND OneHot = "010000000") OR (W = '1' AND OneHot = "100000000"))) ELSE '0';
 
-fA : flipflop PORT MAP(D => A_up, Clock => KEY1, Resetn => '1', Q => OneHot(0));
-fB : flipflop PORT MAP(D => B_up, Clock => KEY1, Resetn => SW(0), Q => OneHot(1));
-fC : flipflop PORT MAP(D => C_up, Clock => KEY1, Resetn => SW(0), Q => OneHot(2));
+fA : flipflop PORT MAP(D => A_up, Clock => KEY(1), Resetn => '1', Q => OneHot(0));
+fB : flipflop PORT MAP(D => B_up, Clock => KEY(1), Resetn => SW(0), Q => OneHot(1));
+fC : flipflop PORT MAP(D => C_up, Clock => KEY(1), Resetn => SW(0), Q => OneHot(2));
 
-fD : flipflop PORT MAP(D => D_up, Clock => KEY1, Resetn => SW(0), Q => OneHot(3));
-fE : flipflop PORT MAP(D => E_up, Clock => KEY1, Resetn => SW(0), Q => OneHot(4));
-fF : flipflop PORT MAP(D => F_up, Clock => KEY1, Resetn => SW(0), Q => OneHot(5));
+fD : flipflop PORT MAP(D => D_up, Clock => KEY(1), Resetn => SW(0), Q => OneHot(3));
+fE : flipflop PORT MAP(D => E_up, Clock => KEY(1), Resetn => SW(0), Q => OneHot(4));
+fF : flipflop PORT MAP(D => F_up, Clock => KEY(1), Resetn => SW(0), Q => OneHot(5));
 
-fG : flipflop PORT MAP(D => G_up, Clock => KEY1, Resetn => SW(0), Q => OneHot(6));
-fH : flipflop PORT MAP(D => H_up, Clock => KEY1, Resetn => SW(0), Q => OneHot(7));
-fI : flipflop PORT MAP(D => I_up, Clock => KEY1, Resetn => SW(0), Q => OneHot(8));
+fG : flipflop PORT MAP(D => G_up, Clock => KEY(1), Resetn => SW(0), Q => OneHot(6));
+fH : flipflop PORT MAP(D => H_up, Clock => KEY(1), Resetn => SW(0), Q => OneHot(7));
+fI : flipflop PORT MAP(D => I_up, Clock => KEY(1), Resetn => SW(0), Q => OneHot(8));
 
 -- LED troubleshoot 
 
@@ -74,7 +74,7 @@ LEDR(9 DOWNTO 2) <= "00000001" WHEN (OneHot(1) = '1') ELSE
 					"00100000" WHEN (OneHot(6) = '1') ELSE
 					"01000000" WHEN (OneHot(7) = '1') ELSE
 					"10000000" WHEN (OneHot(8) = '1') ELSE
-					"00000000";
+					"11111111";
 
 
 LEDR(0) <= '1' WHEN (OneHot = "000010000" OR OneHot = "100000000") ELSE '0';
