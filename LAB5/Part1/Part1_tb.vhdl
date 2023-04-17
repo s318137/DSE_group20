@@ -9,9 +9,9 @@ ARCHITECTURE test_onehotmachine OF Part1_tb IS
 
 	COMPONENT Part1 IS
 		PORT(
-		SW : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
-		KEY : IN STD_LOGIC_VECTOR(3 DOWNTO 0); 
-		LEDR : OUT STD_LOGIC_VECTOR(9 DOWNTO 0)
+			SW : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+			KEY : IN STD_LOGIC_VECTOR(3 DOWNTO 0); 
+			LEDR : OUT STD_LOGIC_VECTOR(9 DOWNTO 0)
 		);
 	END COMPONENT;
 	
@@ -21,120 +21,119 @@ ARCHITECTURE test_onehotmachine OF Part1_tb IS
 	SIGNAL ClockD : STD_LOGIC_VECTOR(3 DOWNTO 0);
 	SIGNAL LED : STD_LOGIC_VECTOR(9 DOWNTO 0) := "0000000000";
 	
-BEGIN
-	uut: Part1 PORT MAP(
-	SW => SW,
-	KEY => ClockD,
-	LEDR => LED
-	);
-	
-PROCESS
-BEGIN
+	BEGIN
 
-	-- Reset to kick off
-	SW(0) <= '0';
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	wait for 1 ps;
-	
-	-- Series of 0
-	
-	SW(0) <= '1';
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	wait for 1 ps;
-	
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	wait for 1 ps;
-	
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	wait for 1 ps;
-	
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	wait for 1 ps;
-	
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	-- Overlapping of result + one 0
-	
-	wait for 1 ps;
-	
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	-- Breaking, to B
-	wait for 1 ps;
-	
-	SW(1) <= '1';
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	wait for 1 ps;
-	
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	wait for 1 ps;
-	
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	wait for 1 ps;
-	
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	wait for 1 ps;
-	
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	-- Overlapping of result + one 1
-	
-	wait for 1 ps;
-	
-	wait for 8 ns;
-	ClockD(1) <= '1';
-	wait for 2 ns;
-	ClockD(1) <= '0';
-	
-	
-	wait;
+		uut: Part1 PORT MAP(
+			SW => SW,
+			KEY => ClockD,
+			LEDR => LED
+		);
+		
+		PROCESS
+			BEGIN
 
+				-- Reset to kick off
+				SW(0) <= '0';
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
+				
+				WAIT FOR 1 ps;
+				
+				-- Series of 0
+				
+				SW(0) <= '1';
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
+				
+				WAIT FOR 1 ps;
+				
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
+				
+				WAIT FOR 1 ps;
+				
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
+				
+				WAIT FOR 1 ps;
+				
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
+				
+				WAIT FOR 1 ps;
+				
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
+				
+				-- Overlapping of result + one 0
+				
+				WAIT FOR 1 ps;
+				
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
+				
+				-- Breaking, to B
+				WAIT FOR 1 ps;
+				
+				SW(1) <= '1';
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
+				
+				WAIT FOR 1 ps;
+				
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
+				
+				WAIT FOR 1 ps;
+				
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
+				
+				WAIT FOR 1 ps;
+				
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
+				
+				WAIT FOR 1 ps;
+				
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
+				
+				-- Overlapping of result + one 1
+				
+				WAIT FOR 1 ps;
+				
+				WAIT FOR 8 ns;
+				ClockD(1) <= '1';
+				WAIT FOR 2 ns;
+				ClockD(1) <= '0';
 
+				WAIT;
 
-END PROCESS;	
+		END PROCESS;
+
 END test_onehotmachine;
