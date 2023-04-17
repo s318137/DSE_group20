@@ -7,15 +7,16 @@ ENTITY Part2 IS
 		SW : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
 		KEY : IN STD_LOGIC_VECTOR(3 DOWNTO 0); 
 		LEDR : OUT STD_LOGIC_VECTOR(9 DOWNTO 0)
-		);
-		
+		);	
 END Part2;
 
 ARCHITECTURE onehot OF Part2 IS
 
 	COMPONENT flipflop IS
-		PORT (D, Clock, Resetn : IN STD_LOGIC;
-		Q : OUT STD_LOGIC);
+		PORT (
+			D, Clock, Resetn : IN STD_LOGIC;
+			Q : OUT STD_LOGIC
+			);
 	END COMPONENT;
 
 	--Signals
@@ -66,8 +67,7 @@ fG : flipflop PORT MAP(D => G_up, Clock => KEY(1), Resetn => SW(0), Q => OneHot(
 fH : flipflop PORT MAP(D => H_up, Clock => KEY(1), Resetn => SW(0), Q => OneHot(7));
 fI : flipflop PORT MAP(D => I_up, Clock => KEY(1), Resetn => SW(0), Q => OneHot(8));
 
-
-LEDR <= "0000000001" WHEN (OneHot = "000010000" OR OneHot = "100000000") ELSE "0000000000";
+LEDR(0) <= '1' WHEN (OneHot = "000010001" OR OneHot = "100000001") ELSE '0';
 
 
  
