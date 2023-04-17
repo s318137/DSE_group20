@@ -12,7 +12,7 @@ entity part5 IS
 	);
 END part5;
 
-architecture structure OF part5 IS
+ARCHITECTURE structure OF part5 IS
 
 	COMPONENT timer_outside_tap IS
 		PORT (

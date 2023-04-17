@@ -9,34 +9,38 @@ ARCHITECTURE behavior OF part4_tb IS
 
     COMPONENT part4
         PORT (
-            sw : IN std_logic_vector(9 DOWNTO 0);
-            clock_50 : IN std_logic;
-            hex0 : OUT std_logic_vector(0 TO 6)
+            SW : IN std_logic_vector(9 DOWNTO 0);
+            CLOCK_50 : IN std_logic;
+            HEX0 : OUT std_logic_vector(0 TO 6)
         );
     END COMPONENT;
 
-    SIGNAL sw : std_logic_vector(9 DOWNTO 0);
-    SIGNAL clock_50 : std_logic := '0';
-    SIGNAL hex0 : std_logic_vector(0 TO 6);
+    SIGNAL SW : std_logic_vector(9 DOWNTO 0);
+    SIGNAL CLOCK_50 : std_logic := '0';
+    SIGNAL HEX0 : std_logic_vector(0 TO 6);
 
     BEGIN
 
         uut : part4 PORT MAP (
-            sw => sw,
-            clock_50 => clock_50,
-            hex0 => hex0
+            SW => SW,
+            CLOCK_50 => CLOCK_50,
+            HEX0 => HEX0
         );
 
         PROCESS
 
             BEGIN
-                sw <= "0000000000";
-                clock_50 <= '0';
-                WAIT FOR 50 ns;
+
+                WAIT FOR 10 ns;
+                CLOCK_50 <= '1';
+                SW <= "0000000000";
+                WAIT FOR 10 ns;
                 
-                sw <= "0000000001";
-                clock_50 <= '1';
-                WAIT FOR 50 ns;
+                CLOCK_50 <= '1';
+                SW <= "0000000001";
+                WAIT FOR 500 ns;
+
+                WAIT;
 
         END PROCESS;
 

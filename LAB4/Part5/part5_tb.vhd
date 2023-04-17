@@ -36,20 +36,14 @@ ARCHITECTURE behavior OF part5_tb IS
             hex3 => hex3
         );
 
-        -- Clock generation
         PROCESS
 
             BEGIN
-                clock_50 <= '0';
+                
                 WAIT FOR 10 ns;
                 clock_50 <= '1';
                 WAIT FOR 10 ns;
                 
-        END PROCESS;
-
-        PROCESS
-
-            BEGIN
                 sw <= "0000000000";
                 key <= "0000";
                 WAIT FOR 100 ns;

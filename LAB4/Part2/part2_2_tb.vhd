@@ -31,22 +31,20 @@ ARCHITECTURE behavior OF part2_2_tb IS
                     );
 
         stim_proc: PROCESS
-            BEGIN		
-                
-                --testing reset
-                WAIT FOR 50 ns;
-                SW <= "0000000001";
-                WAIT FOR 50 ns;
-                KEY <= "0001";
-                WAIT FOR 50 ns;           
+            BEGIN
 
-                --testing enable
-                WAIT FOR 50 ns;
-                SW <= "0000000010";
-                WAIT FOR 50 ns;
+                -- resetting
+                WAIT FOR 10 ns;
+                SW <= "0000000001";
                 KEY <= "0001";
-                WAIT FOR 50 ns;     
-                    
+                WAIT FOR 50 ns;
+
+                -- enabling
+                SW <= "0000000000";
+                SW <= "0000000010";
+                KEY <= "0001";
+                WAIT FOR 500 ns;    
+
                 WAIT;
                 
         END PROCESS;

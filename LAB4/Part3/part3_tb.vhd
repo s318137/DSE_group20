@@ -21,60 +21,46 @@ ARCHITECTURE behavior OF part3_tb IS
     
     BEGIN
 
-    DUT : part3
-
-        PORT MAP (
+        uut : part3 PORT MAP (
             clk => clk_signal,
             en => en_signal,
             rst => rst_signal,
             output => output_signal
         );
     
-    -- Clock generation
-    clk_gen_proc : PROCESS
-        BEGIN
-
-            WHILE TRUE LOOP
-                clk_signal <= NOT clk_signal;
-                WAIT FOR 5 ns;
-            END LOOP;
-            
-        END PROCESS;
-    
     stim_proc : PROCESS
         BEGIN
 
+            -- resetting
             rst_signal <= '1';
+            clk_signal <= '1';
             WAIT FOR 10 ns;
             rst_signal <= '0';
+            clk_signal <= '1';
+
+            WAIT FOR 10 ns;
             
+            -- enabling
             en_signal <= '1';
-            WAIT FOR 10 ns;
+            clk_signal <= '1';
+            -- some time to appreciate the output
+            WAIT FOR 500 ns;
+
+            -- resetting again
             en_signal <= '0';
+            clk_signal <= '1';
             WAIT FOR 10 ns;
-            en_signal <= '1';
+            rst_signal <= '1';
+            clk_signal <= '1';
             WAIT FOR 10 ns;
-            en_signal <= '0';
-            WAIT FOR 10 ns;
-            en_signal <= '1';
-            WAIT FOR 10 ns;
-            en_signal <= '0';
-            
-            WAIT FOR 100 ns;
-            
-            en_signal <= '1';
-            WAIT FOR 10 ns;
-            en_signal <= '0';
-            WAIT FOR 10 ns;
-            en_signal <= '1';
-            WAIT FOR 10 ns;
-            en_signal <= '0';
+
+            -- enabling again
+            rst_signal <= '0';
+            clk_signal <= '1';
             WAIT FOR 10 ns;
             en_signal <= '1';
-            WAIT FOR 10 ns;
-            en_signal <= '0';
-            
-            WAIT FOR 100 ns;
+            clk_signal <= '1';
+            WAIT FOR 500 ns;
             
             WAIT;
 

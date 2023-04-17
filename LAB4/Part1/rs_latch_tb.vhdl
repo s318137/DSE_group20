@@ -25,13 +25,16 @@ BEGIN
     );
 
     clk_PROCESS :PROCESS
-    BEGIN
-        WAIT FOR 10 ns;
-        clk <= NOT clk;
-    END PROCESS;
+        BEGIN
+
+            WAIT FOR 10 ns;
+            clk <= NOT clk;
+
+        END PROCESS;
 
     stim_proc: PROCESS
     BEGIN
+    
         -- Hold reset for some time
         r <= '1';
         s <= '0';
