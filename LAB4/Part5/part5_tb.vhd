@@ -41,20 +41,22 @@ ARCHITECTURE behavior OF part5_tb IS
             BEGIN
                 
                 WAIT FOR 10 ns;
-                clock_50 <= '1';
+                clock_50 <= '0';
                 WAIT FOR 10 ns;
                 
                 sw <= "0000000000";
                 key <= "0000";
-                WAIT FOR 100 ns;
+                clock_50 <= '1';
+                WAIT FOR 10 ns;
                 key <= "0001";
-                WAIT FOR 100 ns;
+                WAIT FOR 250 ns;
                 key <= "1000";
-                WAIT FOR 100 ns;
+                WAIT FOR 10 ns;
 
                 sw <= "1111111111";
+                clock_50 <= '1';
                 key <= "0001";
-                WAIT FOR 100 ns;
+                WAIT FOR 500 ns;
                 key <= "1000";
                 
                 WAIT;
