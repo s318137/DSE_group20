@@ -5,7 +5,7 @@ ENTITY flipflop IS
     PORT (
         D, Clock, Resetn : IN STD_LOGIC;
         Q : OUT STD_LOGIC
-        );
+    );
 END flipflop;
 
 ARCHITECTURE Behavior OF flipflop IS

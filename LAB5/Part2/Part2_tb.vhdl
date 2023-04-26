@@ -9,23 +9,23 @@ ARCHITECTURE test_onehotmachine OF Part2_tb IS
 
 	COMPONENT Part2 IS
 		PORT(
-		SW : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
-		KEY1 : IN STD_LOGIC; 
-		LEDR : OUT STD_LOGIC_VECTOR(9 DOWNTO 0)
+			SW : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+			KEY : IN STD_LOGIC_VECTOR(3 DOWNTO 0); 
+			LEDR : OUT STD_LOGIC_VECTOR(9 DOWNTO 0)
 		);
 	END COMPONENT;
 	
 	--Test signals
 	
 	SIGNAL SW : STD_LOGIC_VECTOR(9 DOWNTO 0) := "0000000000";
-	SIGNAL ClockD : STD_LOGIC := '0';
+	SIGNAL ClockD : STD_LOGIC_VECTOR(3 DOWNTO 0) := "0000";
 	SIGNAL LED : STD_LOGIC_VECTOR(9 DOWNTO 0) := "0000000000";
 	
 	BEGIN
 
 		uut: Part2 PORT MAP(
 			SW => SW,
-			KEY1 => ClockD,
+			KEY => ClockD,
 			LEDR => LED
 		);
 
@@ -35,9 +35,9 @@ ARCHITECTURE test_onehotmachine OF Part2_tb IS
 			-- Reset to kick off
 			SW(0) <= '0';
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 			
 			WAIT FOR 1 ps;
 			
@@ -45,92 +45,92 @@ ARCHITECTURE test_onehotmachine OF Part2_tb IS
 			
 			SW(0) <= '1';
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 			
 			WAIT FOR 1 ps;
 			
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 			
 			WAIT FOR 1 ps;
 			
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 			
 			WAIT FOR 1 ps;
 			
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 			
 			WAIT FOR 1 ps;
 			
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 			
 			-- Overlapping of result + one 0
 			
 			WAIT FOR 1 ps;
 			
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 			
 			-- Breaking, to B
 			WAIT FOR 1 ps;
 			
 			SW(1) <= '1';
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 			
 			WAIT FOR 1 ps;
 			
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 			
 			WAIT FOR 1 ps;
 			
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 			
 			WAIT FOR 1 ps;
 			
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 			
 			WAIT FOR 1 ps;
 			
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 			
 			-- Overlapping of result + one 1
 			
 			WAIT FOR 1 ps;
 			
 			WAIT FOR 8 ns;
-			ClockD <= '1';
+			ClockD(1) <= '1';
 			WAIT FOR 2 ns;
-			ClockD <= '0';
+			ClockD(1) <= '0';
 
 			WAIT;
 
