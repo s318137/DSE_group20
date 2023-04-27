@@ -74,7 +74,7 @@ ARCHITECTURE behavior OF part4 IS
 
 		END PROCESS;
 
-		--state table
+		-- state table
 		PROCESS (c_state,pulse) 
 			BEGIN
 
@@ -96,22 +96,22 @@ ARCHITECTURE behavior OF part4 IS
 
 		END PROCESS;
 
-		--output logic
+		-- output logic
 		PROCESS (c_state, reg_out5)
 			BEGIN
 
 				CASE c_state is
 					WHEN a => logic_out <= (others => '1');
 								
-					WHEN b => logic_out <= "1001000"; --1001000
+					WHEN b => logic_out <= "1001000"; -- H letter
 								
-					WHEN c => logic_out <= "0110000"; --0110000
+					WHEN c => logic_out <= "0110000"; -- E letter
 								
-					WHEN d => logic_out <= "1110001"; --1110001
+					WHEN d => logic_out <= "1110001"; -- L letter
 								
-					WHEN e => logic_out <= "1110001"; --1110001
+					WHEN e => logic_out <= "1110001"; -- L letter
 								
-					WHEN f => logic_out <= "0000001"; --0000001
+					WHEN f => logic_out <= "0000001"; -- O letter
 								
 					WHEN g => logic_out <= (others => '1'); --others=>1
 								
