@@ -8,9 +8,9 @@ ARCHITECTURE behavior OF part4_tb IS
 
     COMPONENT part4
         PORT (
-        clock_50 : IN std_logic;
-        key : IN std_logic_vector(3 DOWNTO 0);
-        HEX0, HEX1, HEX2, HEX3, HEX4, HEX5 : OUT std_logic_vector(0 TO 6)
+            clock_50 : IN std_logic;
+            key : IN std_logic_vector(3 DOWNTO 0);
+            HEX0, HEX1, HEX2, HEX3, HEX4, HEX5 : OUT std_logic_vector(0 TO 6)
         );
     END COMPONENT;
 
@@ -26,20 +26,18 @@ ARCHITECTURE behavior OF part4_tb IS
             BEGIN
 
                 -- Initializiation
-                key <= "0000";
-                clock_50 <= '0';
+                clock_50 <= '1';
                 WAIT FOR 10 ns;
-
-                -- Toggle clock signal every 10 ns
-                FOR i IN 1 TO 100 LOOP
-                    clock_50 <= NOT clock_50;
-                    WAIT FOR 10 ns;
-                END LOOP;
-
-                -- Send key signal to state machine
                 key <= "0001";
                 WAIT FOR 10 ns;
                 key <= "0000";
+                WAIT FOR 10 ns;
+
+                -- Toggle clock signal every 20 ns;
+                FOR i IN 1 TO 100 LOOP
+                    clock_50 <= NOT clock_50;
+                    WAIT FOR 20 ns;
+                END LOOP;
 
                 WAIT;
 
