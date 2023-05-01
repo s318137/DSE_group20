@@ -36,11 +36,11 @@ def rolling(n):
 #output overflow component
 def output(value):
     if value > 127:
-        value = 127
+        return int(127)
     elif value < -128:
-        value = -128
+        return int(-128)
     else:
-        value = value
+        return int(value)
 
 #python inefficient code, simulates vhdl syntax
 def adder4inputs(memB): 
