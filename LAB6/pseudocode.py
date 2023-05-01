@@ -33,6 +33,14 @@ def rolling(n):
     mem32[3] = mem32[3] >> 2#reg <= reg(1 DOWNTO 0) & reg(7 DOWNTO 2);
     
     return mem32
+#output overflow component
+def output(value):
+    if value > 127:
+        value = 127
+    elif value < -128:
+        value = -128
+    else:
+        value = value
 
 #python inefficient code, simulates vhdl syntax
 def adder4inputs(memB): 
@@ -41,15 +49,11 @@ def adder4inputs(memB):
     for i in range(0, 1024):
         mem32 = rolling(i)
         intcalc = (-mem32[0]-mem32[1]+mem32[2]+mem32[3])
-        if intcalc > 127:
-            memB.append(127)
-        elif intcalc < -128:
-            memB.append(-128)
-        else:
-            memB.append(intcalc)
+        memB.append(output(intcalc))
         if i == 1023:
             print("\n DONE \n") #changes a signal to '1' in vhdl
 
+#purely for python
 def int2bin(memory):
     mem =[]
     for i in range(0, len(memory)):
