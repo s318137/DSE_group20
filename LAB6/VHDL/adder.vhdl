@@ -105,27 +105,17 @@ AdderC : CSA_16bit PORT MAP(A_reg => AddA_out,
 	
 	-- These 2 conditions are mutually exclusive; One cannot be both below -128 and above 127
 
-PROCESS
-BEGIN
 	
-	IF (cond_sat127 = '1') THEN --if above 127
-		sat_out <= "01111111";
-		done <= '1'; 
-	
-	ELSIF (cond_sat128 = '1') THEN --if below -128
-		sat_out <= "10000000";
-		done <= '1';
-	
-	ELSIF ((cond_sat127 = '0') AND (cond_sat128 = '0')) THEN --if between the two
-		sat_out <= AddC_out; --no need to change the output
-		done <= '1';
-	END IF;
-	-- done not here to only turn on Done when successfully treated
-END PROCESS;
+	sat_out <=  "01111111" WHEN (cond_sat127 = '1') ELSE
+				"10000000" WHEN (cond_sat128 = '1') ELSE
+				(AddC_out(15) & AddC_out(6 DOWNTO 0));
+	--done <= '1' WHEN ((cond_sat127'EVENT) OR (cond_sat128'EVENT)) ELSE '0'; 
+
+done <= '1' after 2 ns WHEN ((sat_out(0)'EVENT) OR (cond_sat127'EVENT) OR (cond_sat128'EVENT)) ELSE '0' after 4 ns;
 
 -- Controlled time for done'uptime
-done <= '0' AFTER 2 ns WHEN (done = '1');
-
+ADONE <= done;
+AOUT <= sat_out;
 END adding;
 	
 							
