@@ -69,7 +69,11 @@ fa_30 : RCA_4bit PORT MAP (A_reg => A_comp(15 DOWNTO 12), B_reg => B_comp(15 DOW
 fa_31 : RCA_4bit PORT MAP (A_reg => A_comp(15 DOWNTO 12), B_reg => B_comp(15 DOWNTO 12), Ci_in => '1', OVERFLOW =>Cs(7), S_reg => S_buff_path1(15 DOWNTO 12));
 	--Selection
 mux4 : mux2to1_1b PORT MAP(a => Cs(6), b => Cs(7), sel => C3, y => OVERFLOW);
-S_buff(15 DOWNTO 12) <= S_buff_path0(15 DOWNTO 12) WHEN C1='0' ELSE S_buff_path1(15 DOWNTO 12); --Choice of S 3-0
+S_buff(14 DOWNTO 12) <= S_buff_path0(14 DOWNTO 12) WHEN C1='0' ELSE S_buff_path1(14 DOWNTO 12); --Choice of S 3-0
+
+S_buff(15) <='0' WHEN ((B_reg(15) = '1') AND (A_reg(15) = '1')) ELSE
+			 '1' WHEN ((B_reg(15) = '1') XOR (A_reg(15) = '1')) ELSE
+			 '0' WHEN ((B_reg(15) = '0') AND (A_reg(15) = '0'));
 
 S_reg <= (not(signed(S_buff))+ONE) WHEN (B_reg(15) = '1') AND (A_reg(15) = '1') ELSE signed(S_buff) ; -- complement of the sum if both negatives
 
