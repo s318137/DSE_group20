@@ -76,6 +76,8 @@ int main(void)
   NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_0);
 
   /* USER CODE BEGIN Init */
+  int i;
+  int waiting = 25000000;
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -93,15 +95,20 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+  LL_GPIO_WriteReg(GPIOA, ODR,(LL_GPIO_ReadReg(GPIOA, ODR) | 0x0020));
+
   while (1)
   {
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
-	  if ((LL_GPIO_ReadReg(GPIOC, IDR) & 0x2000) == 0x2000) {
-		  LL_GPIO_WriteReg(GPIOA, ODR, (LL_GPIO_ReadReg(GPIOA, ODR) & 0xFFFFFFDF));
+	  LL_GPIO_WriteReg(GPIOA, ODR,(LL_GPIO_ReadReg(GPIOA, ODR) ^ 0x20));
+
+	  if ((LL_GPIO_ReadReg(GPIOC, IDR) & 0x2000) == 0x0) {
+		  waiting = waiting / 2;
 	  }
-	  else {
-		  LL_GPIO_WriteReg(GPIOA, ODR, (LL_GPIO_ReadReg(GPIOA, ODR) | 0x20U));
+
+	  for (i = 0; i < waiting; i++){
 	  }
   }
   /* USER CODE END 3 */
