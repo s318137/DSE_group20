@@ -61,8 +61,8 @@ ARCHITECTURE controlling OF FilterCU IS
 					END IF;
 					
 					WHEN DATA_OUT => 
-					WrB_out = '1';
-					CsA_out = '0';
+					WrB_out <= '1';
+					CsA_out <= '0';
 					IF ((CLK'EVENT AND CLK='1') AND (CNTB = "1111111111") AND (CsA_out = '1') AND (WrB_out = '0')) THEN 
 						Y_D <= DNE;
 					ELSE 
