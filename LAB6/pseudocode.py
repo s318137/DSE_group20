@@ -9,18 +9,24 @@ def createMem(memA):
         memA.append(random.randint(-32, 31)) #random for purpose, 64 for 2^8
 
 # Security to abuse negative values, return of function
-def pseudoX(n):
-    if n < 0: 
+def pseudoX(addr, n):
+    if (addr - n) < 0: 
         return 0
     else:
-        return memA[n]
+        return memA[addr - n]
+
+def fetch32(n):
+    mem32 = []
+    for i in range(0, 4, ):
+        mem32.append(pseudoX(n, i))
+    return mem32
         
 #rolling component : vhdl code
 #reg <= reg(0) & reg(7 downto 1); roll right
 #reg <= reg(7 downto 1) & reg(0); roll left 
 
 def rolling(n):
-    mem32 = [pseudoX(n), pseudoX(n-1), pseudoX(n-2), pseudoX(n-3)]
+    mem32 = fetch32(n)
     
     mem32[0] = mem32[0] >> 1 #reg <= reg(0) & reg(7 DOWNTO 1);
     #mem32[0] = -mem32[0]     #reg <= not(reg); 2's complemented
