@@ -9,7 +9,10 @@ USE ieee.numeric_std.ALL;
 
 ENTITY datapath IS
 	PORT(
-	
+	CsA, CsB : IN STD_LOGIC; 
+	WrA, WrB : IN STD_LOGIC;
+
+	AddrA, AddrB : OUT UNSIGNED(9 DOWNTO 0);
 	);
 END datapath;
 
@@ -33,7 +36,7 @@ ARCHITECTURE Complete_Structure OF datapath IS
 	);
 	END COMPONENT;
 	
-	COMPONENT counterRDB IS
+	COMPONENT counterWRA IS
 	PORT (
 		CLK, CsA, WrA : IN std_logic;
 		CNTA : BUFFER unsigned(10 DOWNTO 0) -- CouNTA 
@@ -45,9 +48,46 @@ ARCHITECTURE Complete_Structure OF datapath IS
 		  sel : in std_logic;
 		  y : OUT UNSIGNED(9 DOWNTO 0));
 	end COMPONENT;
-	
+
+--SIGNALS
+--Addresses signal for A and B
+SIGNAL FiltA : UNSIGNED(9 DOWNTO 0) := (others => '0');
+SIGNAL FiltB : UNSIGNED(9 DOWNTO 0) := (others => '0');
+
+SIGNAL countA : UNSIGNED(9 DOWNTO 0) := (others => '0');
+SIGNAL countB : UNSIGNED(9 DOWNTO 0) := (others => '0');
+
+SIGNAL AddrA_out, AddrB_out : UNSIGNED(9 DOWNTO 0);
+
 BEGIN
+--=>
+filter : comp_filter PORT MAP();
+
+-- Counters 
+counterWRA : counterWRA PORT MAP(CLK => CLK,
+								 CsA => CsA,
+								 WrA => WrA,
+								 CNTA => countA);
+
+counterRDB : counterRDB PORT MAP(CLK => CLK,
+								 CsB => CsB,
+								 WrB => WrB,
+								 CNTB => countB);
 
 
+muxA : muxAddrX PORT MAP(a => FiltA,
+						 b => countA,
+						 sel =>  ,
+						 y => AddrA_out);
+
+muxB : muxAddrX PORT MAP(a => FiltB,
+						 b => countB,
+						 sel => ,
+						 y => AddrB_out);
+
+--output assignment
+
+AddrA = AddrA_out;
+AddrB = AddrB_out;
 
 END Complete_Structure;
