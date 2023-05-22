@@ -10,15 +10,18 @@ def createMem(memA):
 
 # Security to abuse negative values, return of function
 def pseudoX(addr, n):
+    #addr is general address, n is loop count
     if (addr - n) < 0: 
         return 0
     else:
+        #in this pseudocode, memA is global 
+        #the following instruction memA[...] does all the job that is fetching and storing
         return memA[addr - n]
 
 def fetch32(n):
     mem32 = []
     for i in range(0, 4, ):
-        mem32.append(pseudoX(n, i))
+        mem32.append(pseudoX(n, i)) 
     return mem32
         
 #rolling component : vhdl code
@@ -26,7 +29,11 @@ def fetch32(n):
 #reg <= reg(7 downto 1) & reg(0); roll left 
 
 def rolling(n):
-    mem32 = fetch32(n)
+    # The goal of this function is to shift / roll values
+    # The ceiling is done separately
+    mem32 = fetch32(n) #list of 4 values
+    
+    #no for in range, as every instructions are specialized
     
     mem32[0] = mem32[0] >> 1 #reg <= reg(0) & reg(7 DOWNTO 1);
     #mem32[0] = -mem32[0]     #reg <= not(reg); 2's complemented
