@@ -10,7 +10,7 @@ USE ieee.numeric_std.all;
 ENTITY counterOutput IS
 	PORT (
 		CLK, DONE, START : IN std_logic;
-		CNTA : BUFFER unsigned(10 DOWNTO 0); -- CouNTA 
+		CNTA : BUFFER unsigned(9 DOWNTO 0); -- CouNTA 
 		FDONE : OUT STD_LOGIC
 	);
 END counterOutput;

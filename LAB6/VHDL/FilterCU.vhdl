@@ -7,8 +7,9 @@ ENTITY FilterCU IS
 	START : IN STD_LOGIC; 
 	CLK : IN STD_LOGIC;
 	FDONE : IN STD_LOGIC;
-	CNTA, CNTB, COUNT : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+	CNTA, CNTB, COUNT : IN UNSIGNED(9 DOWNTO 0);
 	DONE : OUT STD_LOGIC;
+	RdA, RdB : OUT STD_LOGIC;
 	WrA, WrB : OUT STD_LOGIC;
 	CsA, CsB : OUT STD_LOGIC
 	);
@@ -19,8 +20,9 @@ ARCHITECTURE controlling OF FilterCU IS
 	TYPE State_type IS (STRT, DATA_IN, FILTER, DATA_OUT, DNE);
 	SIGNAL Y_Q, Y_D : State_type; -- y_Q is present state, y_D is next state
 	SIGNAL Done_out : STD_LOGIC := '0';
-	SIGNAL WrA_out, WrB_out : STD_LOGIC := '1';
+	SIGNAL WrA_out, WrB_out : STD_LOGIC := '1'; 
 	SIGNAL CsA_out, CsB_out : STD_LOGIC := '0';
+	SIGNAL RdA_out, RdB_out : STD_LOGIC;
 	
 	BEGIN
 
@@ -34,6 +36,8 @@ ARCHITECTURE controlling OF FilterCU IS
 					WrB_out <= '1';
 					CsA_out <= '0';
 					CsB_out <= '0';
+					RdA_out <= '0';
+					RdB_out <= '0';
 					Done_out <= '0';
 					IF (START = '1' AND Done_out = '0') THEN 
 						Y_D <= DATA_IN;
@@ -54,6 +58,7 @@ ARCHITECTURE controlling OF FilterCU IS
 					CsB_out <= '1';
 					WrB_out <= '0';
 					WrA_out <= '1';
+					RdA_out <= '1';
 					IF ((CLK'EVENT AND CLK='1') AND (CsA_out = '1') AND (CsB_out = '1') AND (WrB_out = '0') AND (COUNT = "1111111111") AND (FDONE = '1')) THEN 
 						Y_D <= DATA_OUT;
 					ELSE 
@@ -63,6 +68,8 @@ ARCHITECTURE controlling OF FilterCU IS
 					WHEN DATA_OUT => 
 					WrB_out <= '1';
 					CsA_out <= '0';
+					RdA_out <= '0';
+					RdB_out <= '1';
 					IF ((CLK'EVENT AND CLK='1') AND (CNTB = "1111111111") AND (CsA_out = '1') AND (WrB_out = '0')) THEN 
 						Y_D <= DNE;
 					ELSE 
@@ -90,6 +97,8 @@ ARCHITECTURE controlling OF FilterCU IS
 				END IF; 
 		END PROCESS;
 DONE <= Done_out;
+RdA <= RdA_out;
+RdB <= RdB_out;
 WrA <= WrA_out;
 WrB <= WrB_out;
 CsA <= CsA_out;

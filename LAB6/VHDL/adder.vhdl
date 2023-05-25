@@ -15,6 +15,7 @@ USE ieee.numeric_std.ALL;
 ENTITY adder IS
 	PORT(
 		A, B, C, D : IN SIGNED(7 DOWNTO 0); --4 8bits inputs
+		ALLOW : IN STD_LOGIC;
 		ADONE : OUT STD_LOGIC; --Adder done, for counter
 		AOUT : OUT SIGNED(7 DOWNTO 0) -- Output
 		);
@@ -49,6 +50,7 @@ ARCHITECTURE adding OF ADDER IS
 		
 		--Output
 		SIGNAL done : STD_LOGIC;
+		SIGNAL RESULT : SIGNED(7 DOWNTO 0);
 	
 BEGIN
 
@@ -110,12 +112,26 @@ AdderC : CSA_16bit PORT MAP(A_reg => AddA_out,
 				"10000000" WHEN (cond_sat128 = '1') ELSE
 				(AddC_out(15) & AddC_out(6 DOWNTO 0));
 	--done <= '1' WHEN ((cond_sat127'EVENT) OR (cond_sat128'EVENT)) ELSE '0'; 
+	
 
-done <= '1' after 2 ns WHEN ((sat_out(0)'EVENT) OR (cond_sat127'EVENT) OR (cond_sat128'EVENT)) ELSE '0' after 4 ns;
-
+PROCESS
+BEGIN
+	-- as default, done = 0
+	done <= '0';
+	
+	WAIT ON sat_out; -- when updated (computation completed) : 
+	WAIT UNTIL (ALLOW = '1');
+	
+	
+	done <= '1';--done up for 2 ns, then back to 0
+	RESULT <= sat_out;
+	
+	WAIT FOR 2 ns;
+	-- in practice, a 2 ns uptime
+END PROCESS;
 -- Controlled time for done'uptime
 ADONE <= done;
-AOUT <= sat_out;
+AOUT <= RESULT;
 END adding;
 	
 							

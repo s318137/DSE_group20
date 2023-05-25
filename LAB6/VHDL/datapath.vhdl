@@ -9,10 +9,19 @@ USE ieee.numeric_std.ALL;
 
 ENTITY datapath IS
 	PORT(
-	CsA, CsB : IN STD_LOGIC; 
-	WrA, WrB : IN STD_LOGIC;
-
-	AddrA, AddrB : OUT UNSIGNED(9 DOWNTO 0);
+		CSA, CSB : IN STD_LOGIC;
+		RDA, RDB : IN STD_LOGIC;
+		WRA, WRB : IN STD_LOGIC;
+		CLK : IN STD_LOGIC;
+		
+		START : STD_LOGIC;
+		
+		Sign2A : IN SIGNED(7 DOWNTO 0);
+		
+		FDONE : OUT STD_LOGIC;
+		
+		Sign2B : OUT SIGNED(7 DOWNTO 0);
+		ADDR_Ad, ADDR_Bd : OUT UNSIGNED(9 DOWNTO 0)
 	);
 END datapath;
 
@@ -25,21 +34,30 @@ ARCHITECTURE Complete_Structure OF datapath IS
 
 	COMPONENT comp_filter IS
 	PORT(
-	
+		CLK : IN STD_LOGIC;
+		START : IN STD_LOGIC;
+		RDA : IN STD_LOGIC;
+		WRA : IN STD_LOGIC;
+		CS : IN STD_LOGIC;
+		X : IN SIGNED(7 DOWNTO 0);
+		Y : OUT SIGNED(7 DOWNTO 0);
+		ADDRA_fetch : OUT UNSIGNED(9 DOWNTO 0);
+		FiltDONE : OUT STD_LOGIC;
+		COUNT : OUT UNSIGNED(9 DOWNTO 0)
 	);
 	END COMPONENT;
 
 	COMPONENT counterRDB IS
 	PORT (
 		CLK, CsB, WrB : IN std_logic;
-		CNTB : BUFFER unsigned(10 DOWNTO 0) -- CouNTB
+		CNTB : BUFFER unsigned(9 DOWNTO 0) -- CouNTB
 	);
 	END COMPONENT;
 	
 	COMPONENT counterWRA IS
 	PORT (
 		CLK, CsA, WrA : IN std_logic;
-		CNTA : BUFFER unsigned(10 DOWNTO 0) -- CouNTA 
+		CNTA : BUFFER unsigned(9 DOWNTO 0) -- CouNTA 
 	);
 	END COMPONENT;
 	
@@ -48,46 +66,56 @@ ARCHITECTURE Complete_Structure OF datapath IS
 		  sel : in std_logic;
 		  y : OUT UNSIGNED(9 DOWNTO 0));
 	end COMPONENT;
+	
+-- SIGNALS
 
---SIGNALS
---Addresses signal for A and B
-SIGNAL FiltA : UNSIGNED(9 DOWNTO 0) := (others => '0');
-SIGNAL FiltB : UNSIGNED(9 DOWNTO 0) := (others => '0');
 
-SIGNAL countA : UNSIGNED(9 DOWNTO 0) := (others => '0');
-SIGNAL countB : UNSIGNED(9 DOWNTO 0) := (others => '0');
-
-SIGNAL AddrA_out, AddrB_out : UNSIGNED(9 DOWNTO 0);
-
+	-- ADDR_X
+	SIGNAL CNTB_out, CNTA_out : UNSIGNED(9 DOWNTO 0);
+	SIGNAL ADDR_A_fetch, COUNT : UNSIGNED(9 DOWNTO 0);
+	
+	--Selectors
+	SIGNAL SelA, SelB : STD_LOGIC := '0';
+	
+	
 BEGIN
---=>
-filter : comp_filter PORT MAP();
 
--- Counters 
-counterWRA : counterWRA PORT MAP(CLK => CLK,
-								 CsA => CsA,
-								 WrA => WrA,
-								 CNTA => countA);
+comp_filter_1 : comp_filter PORT MAP(CLK => CLK,
+									 START => START,
+									 RDA => RDA,
+									 WRA => WRA,
+									 CS => CSA,
+									 X => Sign2A,
+									 Y => Sign2B,
+									 ADDRA_fetch => ADDR_A_fetch,
+									 FiltDONE => FDONE,
+									 COUNT => COUNT
+									 );
 
-counterRDB : counterRDB PORT MAP(CLK => CLK,
-								 CsB => CsB,
-								 WrB => WrB,
-								 CNTB => countB);
+counterRDB_1 : counterRDB PORT MAP(CLK => CLK,
+								   CsB => CSB,
+								   WrB => WRB,
+								   CNTB => CNTB_out);
+
+counterWRA_1 : counterWRA PORT MAP(CLK => CLK,
+								   CsA => CSA,
+								   WrA => WRA,
+								   CNTA => CNTA_out);
+
+SelA <= RDA;
+
+SelB <= RDB;
+
+muxAddrA : muxAddrX PORT MAP(a => CNTA_out,
+							 b => ADDR_A_fetch,
+							 sel => SelA,
+							 y => ADDR_Ad);
+
+muxAddrB : muxAddrX PORT MAP(a => COUNT,
+							 b => CNTB_out,
+							 sel => SelB,
+							 y => ADDR_Bd);
 
 
-muxA : muxAddrX PORT MAP(a => FiltA,
-						 b => countA,
-						 sel =>  ,
-						 y => AddrA_out);
-
-muxB : muxAddrX PORT MAP(a => FiltB,
-						 b => countB,
-						 sel => ,
-						 y => AddrB_out);
-
---output assignment
-
-AddrA = AddrA_out;
-AddrB = AddrB_out;
 
 END Complete_Structure;

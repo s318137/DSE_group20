@@ -10,7 +10,7 @@ USE ieee.numeric_std.all;
 ENTITY counterWRA IS
 	PORT (
 		CLK, CsA, WrA : IN std_logic;
-		CNTA : BUFFER unsigned(10 DOWNTO 0) -- CouNTA 
+		CNTA : BUFFER unsigned(9 DOWNTO 0) -- CouNTA 
 	);
 END counterWRA;
 

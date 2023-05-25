@@ -5,7 +5,7 @@ USE ieee.numeric_std.ALL;
 ENTITY memX IS
 	PORT(
 		DIN : IN SIGNED(7 DOWNTO 0);
-		ADDR : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+		ADDR : IN UNSIGNED(9 DOWNTO 0);
 		CS : IN STD_LOGIC;
 		CLK : IN STD_LOGIC;
 		WR : IN STD_LOGIC;
@@ -17,6 +17,8 @@ END memX;
 ARCHITECTURE Behaviour OF memX IS
 TYPE mem_array IS ARRAY (0 TO 1023) OF SIGNED(7 DOWNTO 0);
 -- b"U....U" for binary format; x"UU" for hex
+
+SIGNAL Data_out : SIGNED(7 DOWNTO 0);
 
 SIGNAL mem_data : mem_array :=(
    x"00",x"00",x"00",x"00",-- 0x00: 
@@ -291,20 +293,15 @@ BEGIN
 		
 		IF (not(WR) = '1' AND RD='0') THEN
 			
-			mem_data(to_integer(unsigned(ADDR))) <= DIN; --typecast to get it right
+			mem_data(to_integer(ADDR)) <= DIN; --typecast to get it right
 		
 		END IF;
 	END IF;
 END PROCESS;
 
-PROCESS
-BEGIN
-		IF (RD = '1' AND WR ='1' AND CS='1') THEN
-			DOUT <= mem_data(to_integer(unsigned(ADDR)));
-		ELSE
-			DOUT <= "00000000";
-			
-		END IF;
-END PROCESS;
+	Data_out <= mem_data(to_integer(ADDR)) WHEN (RD = '1' AND WR ='1' AND CS='1') ELSE
+				(others => '0');
+	
+	DOUT <= Data_out;
 
 END Behaviour;

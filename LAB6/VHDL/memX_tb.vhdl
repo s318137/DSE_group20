@@ -14,7 +14,7 @@ ARCHITECTURE test OF memX_tb IS
 	COMPONENT memX IS
 	PORT(
 		DIN : IN SIGNED(7 DOWNTO 0);
-		ADDR : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+		ADDR : IN UNSIGNED(9 DOWNTO 0);
 		CS : IN STD_LOGIC;
 		CLK : IN STD_LOGIC;
 		WR : IN STD_LOGIC;
@@ -31,30 +31,47 @@ ARCHITECTURE test OF memX_tb IS
 		SIGNAL Data : SIGNED(7 DOWNTO 0) := "00000000";
 		SIGNAL Selection : STD_LOGIC := '1';
 		SIGNAL Count : UNSIGNED(9 DOWNTO 0) := (others => '0');
-		SIGNAL CLK : STD_LOGIC;
+		SIGNAL CLK : STD_LOGIC := '0';
 		SIGNAL Writ : STD_LOGIC := '1'; -- COMPLEMENTED INPUT
 		SIGNAL Reed : STD_LOGIC := '1';
 		
 		-- OUT
-		SIGNAL Address_out : UNSIGNED(9 DOWNTO 0);
+		SIGNAL Dout: SIGNED(7 DOWNTO 0);
 		
 	
 BEGIN
 
-uut : mem32 PORT MAP(
+uut : memX PORT MAP(
 	DIN => Data,
+	ADDR => Count,
 	CS => Selection,
-	COUNT => Count,
 	CLK => CLK,
 	WR => Writ,
 	RD => Reed,
-	ADDR_A => Address_out
+	DOUT => Dout
 );
 
 PROCESS
 BEGIN
-
-	wait for 100 ns;
+	Writ <= '0';
+	Reed <= '0';
+	Data <= (0 => '1', others => '0');
+	
+	
+	CLK <= '1';
+	wait for 10 ns;
+	CLK <= '0';
+	wait for 10 ns;
+	
+	wait for 1 ps;
+	Reed <= '1';
+	
+	CLK <= '1';
+	wait for 10 ns;
+	CLK <= '0';
+	wait for 10 ns;
+	
+	wait for 10 ns;
 	wait;
 
 

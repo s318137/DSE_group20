@@ -32,7 +32,7 @@ ARCHITECTURE test OF mem32_tb IS
 		SIGNAL Data : SIGNED(7 DOWNTO 0) := "00000000";
 		SIGNAL Selection : STD_LOGIC := '1';
 		SIGNAL Count : UNSIGNED(9 DOWNTO 0) := (others => '0');
-		SIGNAL CLK : STD_LOGIC;
+		SIGNAL CLoK : STD_LOGIC := '0';
 		SIGNAL Writ : STD_LOGIC := '1'; -- COMPLEMENTED INPUT
 		SIGNAL Reed : STD_LOGIC := '1';
 		
@@ -47,7 +47,7 @@ uut : mem32 PORT MAP(
 	DIN => Data,
 	CS => Selection,
 	COUNT => Count,
-	CLK => CLK,
+	CLK => CLoK,
 	WR => Writ,
 	RD => Reed,
 	ADDR_A => Address_out,
@@ -57,10 +57,36 @@ uut : mem32 PORT MAP(
 	Dout => D
 );
 
+
 PROCESS
 BEGIN
-
-	wait for 100 ns;
+	Data <= "00000001";
+	Reed <= '0';
+	Writ <= '0';
+	Selection <= '1';
+	
+	wait for 10 ns;
+	CLoK <= '1';
+	wait for 10 ns;
+	CLoK <= '0';
+	
+	wait for 1 ps;	
+		
+	
+	wait for 10 ns;
+	CLoK <= '1';
+	wait for 10 ns;
+	CLoK <= '0';
+	
+	wait for 1 ps;	
+	Count <= (5 => '1', others => '0');
+	
+	wait for 10 ns;
+	CLoK <= '1';
+	wait for 10 ns;
+	CLoK <= '0';
+	
+	wait for 10 ns;
 	wait;
 
 
