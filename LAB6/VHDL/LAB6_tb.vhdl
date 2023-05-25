@@ -30,6 +30,8 @@ SIGNAL DataIN : SIGNED(7 DOWNTO 0) := "00000001"; -- =/= 0, to see effects
 SIGNAL DONE : STD_LOGIC;
 SIGNAL DataOUT : SIGNED(7 DOWNTO 0);
 
+SIGNAL j : INTEGER := 0;
+
 	
 BEGIN
 
@@ -41,12 +43,17 @@ uut : LAB6 PORT MAP(
 	DataOUT => DataOUT
 	);
 	
-BEGIN
-
 PROCESS
 BEGIN
-
-
+	START <= '1';
+	CLK <= '0';
+	
+	WAIT FOR 2 ns;
+	
+	CLK <= '1';
+	j <= j+1;
+	
+	WAIT FOR 2 ns;
 
 END PROCESS;
 END test;
