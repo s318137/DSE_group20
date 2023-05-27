@@ -41,7 +41,7 @@ ARCHITECTURE Complete_Structure OF datapath IS
 		CS : IN STD_LOGIC;
 		X : IN SIGNED(7 DOWNTO 0);
 		Y : OUT SIGNED(7 DOWNTO 0);
-		ADDRA_fetch : OUT UNSIGNED(9 DOWNTO 0);
+		ADDR_A_fetch : OUT UNSIGNED(9 DOWNTO 0);
 		FiltDONE : OUT STD_LOGIC;
 		COUNT : OUT UNSIGNED(9 DOWNTO 0)
 	);
@@ -87,7 +87,7 @@ comp_filter_1 : comp_filter PORT MAP(CLK => CLK,
 									 CS => CSA,
 									 X => Sign2A,
 									 Y => Sign2B,
-									 ADDRA_fetch => ADDR_A_fetch,
+									 ADDR_A_fetch => ADDR_A_fetch,
 									 FiltDONE => FDONE,
 									 COUNT => COUNT
 									 );
