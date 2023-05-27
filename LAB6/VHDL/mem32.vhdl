@@ -144,9 +144,8 @@ BEGIN
 	memAdd <= '0';
 	
 	AddrA_out <= to_signed(AddrN - j, (AddrA_out'LENGTH));
-	WAIT FOR 0.5 ns;
-
 	FETCH_fin <= '1';
+	WAIT FOR 0.5 ns;
 
 END PROCESS;
 
