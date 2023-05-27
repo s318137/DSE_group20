@@ -126,7 +126,7 @@ BEGIN
 	done <= '1';--done up for 2 ns, then back to 0
 	RESULT <= sat_out;
 	
-	WAIT FOR 2 ns;
+	WAIT FOR 5 ns; --5 ns for a clock of 4 ns
 	-- in practice, a 2 ns uptime
 END PROCESS;
 -- Controlled time for done'uptime
