@@ -11,15 +11,18 @@ ENTITY roller IS
 		);
 END ENTITY;
 
+
 ARCHITECTURE Behaviour OF roller IS
 
 CONSTANT ONE : SIGNED(A'RANGE) := (0 => '1', others => '0');
-
+-- Negation for 2 inputs
 SIGNAL NegW, NegX : SIGNED(7 DOWNTO 0) := "00000000";
-SIGNAL W_out, X_out, Y_out, Z_out : SIGNED(7 DOWNTO 0) := "00000000";
+SIGNAL W_out, X_out, Y_out, Z_out : SIGNED(7 DOWNTO 0) := "00000000"; 
+--Shouldn't normally be driven, but it blocks any U bits
 
 
 BEGIN
+	-- signed complementarization 
 	NegW <= not(A) + ONE;
 	NegX <= not(B) + ONE;
 	

@@ -3,7 +3,8 @@ USE IEEE.STD_LOGIC_1164.ALL;
 USE ieee.numeric_std.ALL;
 
 --comp_filter for complete filter
--- This is the component merging every minor component to execute the filtering process
+-- This is the component merging every minor components to execute the filtering process
+-- It is separated in this precise component to stick to the plan given in the assignment
 
 ENTITY comp_filter IS
 	PORT(

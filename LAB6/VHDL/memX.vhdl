@@ -20,6 +20,7 @@ TYPE mem_array IS ARRAY (0 TO 1023) OF SIGNED(7 DOWNTO 0);
 
 SIGNAL Data_out : SIGNED(7 DOWNTO 0);
 
+-- 1 Kb array of signed divided here in 8 blocks of 128 numbers
 SIGNAL mem_data : mem_array :=(
    x"00",x"00",x"00",x"00",-- 0x00: 
    x"00",x"00",x"00",x"00",-- 0x04: 
@@ -289,6 +290,7 @@ SIGNAL mem_data : mem_array :=(
 BEGIN
 PROCESS(CLK)
 BEGIN
+	--Memory writing is clock based, even though it couldn't be the case
 	IF (CLK'EVENT AND CLK ='1' AND CS = '1') THEN --clock rise, cs to be chosen
 		
 		IF (not(WR) = '1' AND RD='0') THEN
@@ -298,7 +300,8 @@ BEGIN
 		END IF;
 	END IF;
 END PROCESS;
-
+	
+	-- Instead of being synchronous, the reading is asynchronous for the purpose of reading 4 parts of the memory within a period (mem32)
 	Data_out <= mem_data(to_integer(ADDR)) WHEN (RD = '1' AND WR ='1' AND CS='1') ELSE
 				(others => '0');
 	
