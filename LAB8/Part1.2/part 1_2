@@ -109,10 +109,12 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  reg = (LL_TIM_ReadReg(TIM3,SR) & 0x01U);
+
 	  if (reg == 0x01U){
 		  LL_GPIO_WriteReg(GPIOA,ODR,(LL_GPIO_ReadReg(GPIOA,ODR) ^ 0x0400U));
 		  LL_TIM_WriteReg(TIM3,SR,(LL_TIM_ReadReg(TIM3,SR) & 0xfffffffe));
 	  }
+    
   }
   /* USER CODE END 3 */
 }

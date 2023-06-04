@@ -119,18 +119,22 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	sr_ch1 = LL_TIM_ReadReg(TIM3,SR) & 0x02u;
-	sr_ch2 = LL_TIM_ReadReg(TIM3,SR) & 0x04u;
-	if (sr_ch1 == 0x02u) {
-	  LL_TIM_WriteReg(TIM3,SR,LL_TIM_ReadReg(TIM3,SR) & 0xfffffffd);
-	LL_TIM_WriteReg(TIM3,CCR1,lowfreq*lowfreqmult - 1);
-	lowfreqmult++;
-	}
-	if (sr_ch2 == 0x04u) {
-	  LL_TIM_WriteReg(TIM3,SR,LL_TIM_ReadReg(TIM3,SR) & 0xfffffffb);
-	  LL_TIM_WriteReg(TIM3,CCR2,highfreq*highfreqmult - 1);
-	  highfreqmult++;
-	}
+
+    sr_ch1 = LL_TIM_ReadReg(TIM3,SR) & 0x02u;
+    sr_ch2 = LL_TIM_ReadReg(TIM3,SR) & 0x04u;
+
+    if (sr_ch1 == 0x02u) {
+      LL_TIM_WriteReg(TIM3,SR,LL_TIM_ReadReg(TIM3,SR) & 0xfffffffd);
+      LL_TIM_WriteReg(TIM3,CCR1,lowfreq*lowfreqmult - 1);
+      lowfreqmult++;
+    }
+
+    if (sr_ch2 == 0x04u) {
+      LL_TIM_WriteReg(TIM3,SR,LL_TIM_ReadReg(TIM3,SR) & 0xfffffffb);
+      LL_TIM_WriteReg(TIM3,CCR2,highfreq*highfreqmult - 1);
+      highfreqmult++;
+    }
+
   }
   /* USER CODE END 3 */
 }
