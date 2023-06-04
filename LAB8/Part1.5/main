@@ -115,15 +115,18 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    
   	  if ((LL_ADC_ReadReg(ADC1,SR) & 0x02U) == 0x02U){
   		  OCR_INCREMENT = 52000 -169*LL_ADC_ReadReg(ADC1,DR);
   	  }
+
   	  if ((LL_TIM_ReadReg(TIM3,SR) & 0x02U) == 0x02U){
   		  LL_TIM_WriteReg(TIM3,SR,(LL_TIM_ReadReg(TIM3,SR) & 0x02U) & 0xFFFD);
   		  OCR_VALUE += OCR_INCREMENT;
   		  if (OCR_VALUE > ARR_VALUE){
   			  OCR_VALUE -= ARR_VALUE;
   		  }
+
   		  LL_TIM_WriteReg(TIM3,CCR1,OCR_VALUE - 1);
   	  }
     }
