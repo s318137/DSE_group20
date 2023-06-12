@@ -208,6 +208,20 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
+  * @brief This function handles ADC1 global interrupt.
+  */
+void ADC_IRQHandler(void)
+{
+  /* USER CODE BEGIN ADC_IRQn 0 */
+
+  /* USER CODE END ADC_IRQn 0 */
+
+  /* USER CODE BEGIN ADC_IRQn 1 */
+
+  /* USER CODE END ADC_IRQn 1 */
+}
+
+/**
   * @brief This function handles TIM3 global interrupt.
   */
 void TIM3_IRQHandler(void)
@@ -215,19 +229,27 @@ void TIM3_IRQHandler(void)
   /* USER CODE BEGIN TIM3_IRQn 0 */
 
   /* USER CODE END TIM3_IRQn 0 */
+
   /* USER CODE BEGIN TIM3_IRQn 1 */
+
 	  if ((LL_TIM_ReadReg(TIM3,SR) & 0x02U) == 0x02U){
 		  LL_TIM_WriteReg(TIM3,SR,LL_TIM_ReadReg(TIM3,SR) & 0xFFFD);
-		  LL_TIM_WriteReg(TIM3,CCR1,(LL_TIM_ReadReg(TIM3,CCR1) + CCR1_INCREMENT)%ARR_VALUE);
+		 // LL_TIM_WriteReg(TIM3,CCR1,(LL_TIM_ReadReg(TIM3,CCR1) + CCR1_INCREMENT)%ARR_VALUE);
+		  LL_TIM_WriteReg(TIM3,CCR1,(LL_TIM_ReadReg(TIM3,CCR1) + CCR1_INCREMENT));
 	  }
-	  else if ((LL_TIM_ReadReg(TIM3,SR) & 0x04U) == 0x04U){
+
+	  if ((LL_TIM_ReadReg(TIM3,SR) & 0x04U) == 0x04U){
 		  LL_TIM_WriteReg(TIM3,SR,LL_TIM_ReadReg(TIM3,SR) & 0xFFFB);
-		  LL_TIM_WriteReg(TIM3,CCR2,(LL_TIM_ReadReg(TIM3,CCR2) + CCR2_INCREMENT)%ARR_VALUE);
+		  //LL_TIM_WriteReg(TIM3,CCR2,(LL_TIM_ReadReg(TIM3,CCR2) + CCR2_INCREMENT)%ARR_VALUE);
+		  LL_TIM_WriteReg(TIM3,CCR2,(LL_TIM_ReadReg(TIM3,CCR2) + CCR2_INCREMENT));
 	  }
-	  else if ((LL_TIM_ReadReg(TIM3,SR) & 0x08U) == 0x08U){
+
+	  if ((LL_TIM_ReadReg(TIM3,SR) & 0x08U) == 0x08U){
 		  LL_TIM_WriteReg(TIM3,SR,LL_TIM_ReadReg(TIM3,SR) & 0xFFF7);
-		  LL_TIM_WriteReg(TIM3,CCR3,(LL_TIM_ReadReg(TIM3,CCR3) + CCR3_INCREMENT)%ARR_VALUE);
+		 // LL_TIM_WriteReg(TIM3,CCR3,(LL_TIM_ReadReg(TIM3,CCR3) + CCR3_INCREMENT)%ARR_VALUE);
+		  LL_TIM_WriteReg(TIM3,CCR3,(LL_TIM_ReadReg(TIM3,CCR3) + CCR3_INCREMENT));
 	  }
+
   /* USER CODE END TIM3_IRQn 1 */
 }
 
