@@ -7,14 +7,14 @@ USE ieee.numeric_std.all;
 
 -- The counter uses signed numbers
 
-ENTITY counterWRA IS
+ENTITY counterRDB IS
 	PORT (
 		CLK, CsB, WrB : IN std_logic;
 		CNTB : BUFFER unsigned(10 DOWNTO 0) -- CouNTB
 	);
-END counterWRA;
+END counterRDB;
 
-ARCHITECTURE behavior OF counterWRA IS
+ARCHITECTURE behavior OF counterRDB IS
 	
 	BEGIN
 		PROCESS (CLK, WrB)
